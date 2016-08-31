@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.2"
 
     defaultConfig {
-        applicationId "edu.weber.cs3750.blackjack"
+        applicationId "edu.weber.cs3750.blackjackcs3750"
         minSdkVersion 21
         targetSdkVersion 24
         versionCode 1

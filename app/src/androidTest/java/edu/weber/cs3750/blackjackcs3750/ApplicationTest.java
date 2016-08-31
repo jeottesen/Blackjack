@@ -1,4 +1,4 @@
-package edu.weber.cs3750.blackjack;
+package edu.weber.cs3750.blackjackcs3750;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
