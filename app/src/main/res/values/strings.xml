@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BlackJackCS3750</string>
+    <string name="hello_world">Testing Git Commit (and Hello World!)</string>
 </resources>
