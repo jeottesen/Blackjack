@@ -6,7 +6,7 @@ package edu.weber.cs3750.blackjackcs3750.Models;
 public enum CardSuits {
     SPADES('\u2660'),
     HEARTS('\u2665'),
-    DIAMONDS('\u2667'),
+    DIAMONDS('\u2666'),
     CLUBS('\u2663');
 
     private final char value;
