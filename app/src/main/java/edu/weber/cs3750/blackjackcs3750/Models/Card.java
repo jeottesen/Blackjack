@@ -23,6 +23,23 @@ public class Card {
 
     @Override
     public String toString() {
-        return (value.getValue() + " " + suit.getValue());
+        String string;
+        switch (value) {
+            case ACE:
+                string = "A" + suit.getValue();
+                break;
+            case JACK:
+                string = "J" + suit.getValue();
+                break;
+            case QUEEN:
+                string = "Q" + suit.getValue();
+                break;
+            case KING:
+                string = "K" + suit.getValue();
+                break;
+            default:
+                string = value.getValue() + " " + suit.getValue();
+        }
+        return string;
     }
 }

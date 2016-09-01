@@ -4,10 +4,10 @@ package edu.weber.cs3750.blackjackcs3750.Models;
  * Created by jeremyottesen on 8/31/16.
  */
 public enum CardSuits {
-    SPADES('S'),
-    HEARTS('H'),
-    DIAMONDS('D'),
-    CLUBS('C');
+    SPADES('\u2660'),
+    HEARTS('\u2665'),
+    DIAMONDS('\u2667'),
+    CLUBS('\u2663');
 
     private final char value;
 
@@ -15,6 +15,7 @@ public enum CardSuits {
         this.value = value;
     }
 
+    //public char getValue() {
     public char getValue() {
         return value;
     }

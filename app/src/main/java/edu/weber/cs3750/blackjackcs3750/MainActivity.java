@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         }
 
         dealerHand = new HandFragment();
-        dealerHand.addCard(new Card(CardValues.ACE, CardSuits.CLUBS));
+        dealerHand.addCard(new Card(CardValues.ACE, CardSuits.HEARTS));
 
         playerHand = new HandFragment();
         playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
-        playerHand.addCard(new Card(CardValues.NINE, CardSuits.SPADES));
+        playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dealerHand, dealerHand)
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dealerHand.addCard(new Card(CardValues.TEN, CardSuits.SPADES));
+                dealerHand.addCard(new Card(CardValues.KING, CardSuits.SPADES));
                 playerHand.addCard(new Card(CardValues.SEVEN, CardSuits.HEARTS));
             }
         });
