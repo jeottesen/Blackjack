@@ -15,7 +15,6 @@ public enum CardSuits {
         this.value = value;
     }
 
-    //public char getValue() {
     public char getValue() {
         return value;
     }
