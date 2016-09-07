@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">BlackJackCS3750</string>
+<<<<<<< HEAD
+    <string name="hello_world">Testing Git Commit (and Hello World!)</string>
+=======
     <string name="hello_blank_fragment">Hello Blank Fragment</string>
+>>>>>>> basic-layout
 </resources>
