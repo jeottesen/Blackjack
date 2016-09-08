@@ -16,12 +16,13 @@ import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class HandFragment extends Fragment {
 
-    private Hand mHand;
+    protected Hand mHand;
 
     private TextView txvCurrentHand;
     private TextView txvHandCount;
 
     private OnPlayerInteractionListener mListener;
+    private String whoseHand; //Gisela
 
     public HandFragment() {
         // Required empty public constructor
@@ -52,7 +53,7 @@ public class HandFragment extends Fragment {
         }
     }
 
-    private void updateView() {
+    protected void updateView() {
         //return if the textview is null
         // if the textview is null the view probably hasn't been created yet.
         // this function will run when the view is created
@@ -81,6 +82,9 @@ public class HandFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
         return inflater.inflate(R.layout.fragment_hand, container, false);
     }
 
@@ -90,6 +94,9 @@ public class HandFragment extends Fragment {
 
         if(mHand == null)
             mHand = new Hand();
+
+        MainActivity mainActivity = (MainActivity)getActivity();
+        mainActivity.dealFirstCards(this.getClass());  //this way the first cards are dealt AFTER the Hand exists. (Geese)
 
         txvCurrentHand = (TextView) view.findViewById(R.id.currentHand);
         txvHandCount = (TextView) view.findViewById(R.id.handCount);

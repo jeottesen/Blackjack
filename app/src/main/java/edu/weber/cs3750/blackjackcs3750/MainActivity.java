@@ -3,6 +3,7 @@ package edu.weber.cs3750.blackjackcs3750;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,16 +11,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
-import edu.weber.cs3750.blackjackcs3750.Models.CardSuits;
-import edu.weber.cs3750.blackjackcs3750.Models.CardValues;
+import edu.weber.cs3750.blackjackcs3750.Models.Deck;
 import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class MainActivity extends AppCompatActivity implements HandFragment.OnPlayerInteractionListener {
 
     public static final String PREFS_NAME = "GameStats";
+
+    Deck deck;
+    Queue<Card> discardQueue = new LinkedList<>();
 
     HandFragment dealerHand;
     HandFragment playerHand;
@@ -31,18 +37,23 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        deck = new Deck();
+        deck.initialize();
+        Log.d("debug", "deck size: " + deck.deckSize());
+        Log.d("debug", "card 0: " + deck.deck.get(0).getValue());
 
         if (savedInstanceState != null) {
             return;
         }
 
-        dealerHand = new HandFragment();
-        dealerHand.addCard(new Card(CardValues.ACE, CardSuits.HEARTS));
+        dealerHand = new DealerHandFragment();
+        //dealerHand.addCard(new Card(CardValues.BACK, CardSuits.BACK));
+       // dealerHand.addCard(new Card(CardValues.ACE, CardSuits.HEARTS));
 
-        playerHand = new HandFragment();
-        playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
-        playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
 
+    playerHand = new PlayerHandFragment();
+    //playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
+    //playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dealerHand, dealerHand)
                 .commit();
@@ -52,14 +63,21 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
                 .commit();
 
 
+       // Log.d("debug", "onCreate: dealerHand 0 : " + dealerHand.mHand.handCards.get(0).getValue());
+
+
         Button btnHit = (Button) findViewById(R.id.btnHit);
         Button btnStand = (Button) findViewById(R.id.btnStand);
 
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dealerHand.addCard(new Card(CardValues.KING, CardSuits.SPADES));
-                playerHand.addCard(new Card(CardValues.SEVEN, CardSuits.HEARTS));
+                deck.dealCard(dealerHand.mHand);
+                deck.dealCard(playerHand.mHand);
+                dealerHand.updateView();
+                playerHand.updateView();
+                /*dealerHand.addCard(new Card(CardValues.KING, CardSuits.SPADES));
+                playerHand.addCard(new Card(CardValues.SEVEN, CardSuits.HEARTS));*/
             }
         });
 
@@ -75,6 +93,18 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         wins = settings.getInt("wins", 0);
         losses = settings.getInt("losses", 0);
 
+    }
+
+    /*
+    This method gets called by each HandFragment after its View is created.  That way the HandFragment's hand
+    is sure to actually exist before the first cards are dealt to it.  (avoiding Null Pointer)  --Geese
+     */
+    public void dealFirstCards(Class theClass){
+        if (dealerHand.mHand != null && theClass.toString().contains("Dealer")) {
+            deck.dealCard(dealerHand.mHand, 2);
+        }
+        if (playerHand.mHand != null && theClass.toString().contains("Player"))
+            deck.dealCard(playerHand.mHand, 2);
     }
 
 
