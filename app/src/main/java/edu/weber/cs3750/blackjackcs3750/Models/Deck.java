@@ -3,17 +3,19 @@ package edu.weber.cs3750.blackjackcs3750.Models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.Stack;
+
 
 /**
  * Created by Kyle Richetti on 9/8/2016.
  */
 public class Deck {
     private ArrayList<Card> cards;
-    private int position;
+    private Stack<Card> drawPile;
 
     public Deck(){
         cards = new ArrayList<Card>();
-        position = 0;
+        drawPile = new Stack<Card>();
 
         //Minimum of two decks
         addDeck();
@@ -22,34 +24,29 @@ public class Deck {
 
     //Function to draw a card from the deck
     public Card draw(){
-        //Two options:
-            //Create a temp card that holds the card at position
-            //Increment position
-            //Return the temp card
-        //Or:
-            //Increment position by 1
-            //Return the card at position - 1
-
-        position++;
-
         //Conditional to handle the deck running out of cards
-        if(position > cards.size()){
-            reset();
-            position++;
+        if(drawPile.size() == 0){
+            shuffle();
         }
-        return cards.get(position-1);
+        return drawPile.pop();
+
     }
 
     //Function to shuffle the deck
     public void shuffle(){
+        //Shuffles the available cards
         long seed = System.nanoTime();
         Collections.shuffle(cards, new Random(seed));
+
+        //Load the cards into the draw pile
+        for (int i = 0; i < cards.size(); i++) {
+            drawPile.push(cards.get(i));
+        }
     }
 
     //Reset function to be called either on starting a new game
     //or when the deck runs out of cards
     public void reset(){
-        position = 0;
         shuffle();
     }
 
