@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
             return;
         }
 
-        Deck dealerDeck = new Deck();
+        final Deck dealerDeck = new Deck();
         dealerDeck.shuffle();
 
         dealerHand = new HandFragment();
@@ -62,9 +62,8 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //deck.draw()
-                dealerHand.addCard(new Card(CardValues.KING, CardSuits.SPADES));
-                playerHand.addCard(new Card(CardValues.SEVEN, CardSuits.HEARTS));
+                dealerHand.addCard(dealerDeck.draw());
+                playerHand.addCard(dealerDeck.draw());
             }
         });
 
