@@ -27,7 +27,13 @@ public class HandFragment extends Fragment {
     private TextView txvHandCount;
 
     private OnPlayerInteractionListener mListener;
-    private String whoseHand; //Gisela
+
+
+    private boolean isFirstCardFaceUp;
+
+    protected void setFirstCardFaceUp(boolean faceUp){
+        isFirstCardFaceUp = faceUp;
+    }
 
     public HandFragment() {
         // Required empty public constructor
@@ -79,6 +85,8 @@ public class HandFragment extends Fragment {
     }*/
 
 
+
+
     protected void updateView() {
         ArrayList<String> cardStrings = mHand.toStringArrayList();
         //Log.d("debug", "updateView: cardStrings.size " + cardStrings.size());
@@ -114,8 +122,12 @@ public class HandFragment extends Fragment {
             newCard.setAdjustViewBounds(true);
             newCard.setOutlineProvider(ViewOutlineProvider.BOUNDS);
             int drawableID = mainActivity.getResources().getIdentifier(cardStrings.get(index), "drawable", mainActivity.getPackageName());
-            if (thisClass.toString().contains("Dealer") && index == 0)
-                newCard.setImageResource(R.drawable.card_back);
+            if (thisClass.toString().contains("Dealer") && index == 0) {
+                if(isFirstCardFaceUp)
+                    newCard.setImageResource(drawableID);
+                else
+                    newCard.setImageResource(R.drawable.card_back);
+            }
             else
                 newCard.setImageResource(drawableID);
             newCard.setScaleType(ImageView.ScaleType.FIT_XY);

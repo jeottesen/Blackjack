@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 public class DealerHandFragment extends HandFragment {
 
 
-    private String whoseHand; //Gisela
-
     public DealerHandFragment() {
         // Required empty public constructor
     }
@@ -23,14 +21,10 @@ public class DealerHandFragment extends HandFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        whoseHand = "dealer";
-        Log.d("debug", "whoseHand: " + whoseHand);
-
-
-
+        setFirstCardFaceUp(false);
         return inflater.inflate(R.layout.fragment_hand, container, false);
     }
+
 
 
 }

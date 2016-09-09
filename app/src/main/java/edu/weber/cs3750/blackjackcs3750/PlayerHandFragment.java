@@ -11,8 +11,7 @@ import android.view.ViewGroup;
  */
 public class PlayerHandFragment extends HandFragment {
 
-    //probably don't even need this field
-    private String whoseHand; //Gisela
+
 
     public PlayerHandFragment() {
         // Required empty public constructor
@@ -24,8 +23,6 @@ public class PlayerHandFragment extends HandFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        whoseHand = "player";
-        Log.d("debug", "whoseHand: " + whoseHand);
 
         return inflater.inflate(R.layout.fragment_hand, container, false);
     }

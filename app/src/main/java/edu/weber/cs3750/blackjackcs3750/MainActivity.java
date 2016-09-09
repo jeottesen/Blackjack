@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
                 deck.shuffle();
                 dealFirstCards(new DealerHandFragment().getClass());
                 dealFirstCards(new PlayerHandFragment().getClass());
+                dealerHandFragment.setFirstCardFaceUp(false);  //could be set to true when clicking "Stand"
                 dealerHandFragment.updateView();
                 playerHandFragment.updateView();
             }
