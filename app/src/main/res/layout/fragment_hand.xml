@@ -3,7 +3,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
               android:orientation="vertical"
-             tools:context=".HandFragment">
+              tools:context=".HandFragment">
 
 
 <RelativeLayout
@@ -23,12 +23,15 @@
         />
  -->
     <TextView
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-smallcaps"
         android:textSize="18sp"
         android:layout_weight="1"
         android:id="@+id/handCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
+        android:paddingBottom="20dp"
        />
 
 </LinearLayout>

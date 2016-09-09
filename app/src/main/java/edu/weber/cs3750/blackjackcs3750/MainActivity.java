@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deck.dealCard(dealerHand.mHand);
+                //deck.dealCard(dealerHand.mHand);
                 deck.dealCard(playerHand.mHand);
-                dealerHand.updateView();
+                //dealerHand.updateView();
                 playerHand.updateView();
                 /*dealerHand.addCard(new Card(CardValues.KING, CardSuits.SPADES));
                 playerHand.addCard(new Card(CardValues.SEVEN, CardSuits.HEARTS));*/
