@@ -1,7 +1,6 @@
 package edu.weber.cs3750.blackjackcs3750;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
@@ -84,7 +82,7 @@ public class HandFragment extends Fragment {
     protected void updateView() {
         ArrayList<String> cardStrings = mHand.toStringArrayList();
         //Log.d("debug", "updateView: cardStrings.size " + cardStrings.size());
-        drawCardImage(cardStrings);
+        drawCardImages(cardStrings, this.getClass());
         //txvCurrentHand.setText(String.valueOf(cardStrings.get(0)));
         String handCountText;
 
@@ -98,7 +96,7 @@ public class HandFragment extends Fragment {
         txvHandCount.setText(handCountText);
     }
 
-    private void drawCardImage(ArrayList<String> cardStrings) {
+    private void drawCardImages(ArrayList<String> cardStrings, Class thisClass) {
         int beginningStartMargin = 60;
         int beginningElevation = 4;
         MainActivity mainActivity = (MainActivity)getActivity();
@@ -116,7 +114,10 @@ public class HandFragment extends Fragment {
             newCard.setAdjustViewBounds(true);
             newCard.setOutlineProvider(ViewOutlineProvider.BOUNDS);
             int drawableID = mainActivity.getResources().getIdentifier(cardStrings.get(index), "drawable", mainActivity.getPackageName());
-            newCard.setImageResource(drawableID);
+            if (thisClass.toString().contains("Dealer") && index == 0)
+                newCard.setImageResource(R.drawable.card_back);
+            else
+                newCard.setImageResource(drawableID);
             newCard.setScaleType(ImageView.ScaleType.FIT_XY);
             relativeLayoutHand.addView(newCard, params);
         }
