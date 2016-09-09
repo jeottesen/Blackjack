@@ -15,7 +15,6 @@ import android.widget.Toast;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.Models.Deck;
-
 import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class MainActivity extends AppCompatActivity implements HandFragment.OnPlayerInteractionListener {
@@ -45,10 +44,12 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
             return;
         }
 
+
         currentDeck = new Deck();
 
         playerHand = HandFragment.newInstance(true);
         dealerHand = HandFragment.newInstance(false);
+
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dealerHand, dealerHand)
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
             @Override
             public void onClick(View view) {
                 hit();
+
             }
         });
         btnStand.setOnClickListener(new View.OnClickListener() {
