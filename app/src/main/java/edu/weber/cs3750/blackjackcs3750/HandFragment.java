@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
@@ -17,9 +18,14 @@ import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 public class HandFragment extends Fragment {
 
     private Hand mHand;
-
+    private boolean isPlayer;
     private TextView txvCurrentHand;
     private TextView txvHandCount;
+    private ImageView cardOne;
+    private ImageView cardTwo;
+    private ImageView cardThree;
+    private ImageView cardFour;
+    private ImageView cardFive;
 
     private OnPlayerInteractionListener mListener;
 
@@ -36,7 +42,13 @@ public class HandFragment extends Fragment {
         updateView();
         findHandStatus();
     }
-
+    public void removeAllCards() {
+        if(mHand == null)
+            mHand = new Hand();
+        mHand.removeAllCards();
+        updateView();
+        findHandStatus();
+    }
     public int getHandCount() {
         return mHand.getCardCount();
     }
@@ -90,10 +102,15 @@ public class HandFragment extends Fragment {
 
         if(mHand == null)
             mHand = new Hand();
+        isPlayer = getArguments().getBoolean("isPlayer");
 
         txvCurrentHand = (TextView) view.findViewById(R.id.currentHand);
         txvHandCount = (TextView) view.findViewById(R.id.handCount);
-
+        cardOne = (ImageView) view.findViewById(R.id.card_one);
+        cardTwo = (ImageView) view.findViewById(R.id.card_two);
+        cardThree = (ImageView) view.findViewById(R.id.card_three);
+        cardFour =  (ImageView) view.findViewById(R.id.card_four);
+        cardFive = (ImageView) view.findViewById(R.id.card_five);
         updateView();
     }
 

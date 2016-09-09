@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="edu.weber.cs3750.blackjackcs3750.MainActivity">
+    tools:context="edu.weber.cs3750.blackjackcs3750.MainActivity"
+    android:background="@drawable/table_felt">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,6 +47,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Stand"/>
+            <Button
+                android:id="@+id/btnNewGame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Game"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

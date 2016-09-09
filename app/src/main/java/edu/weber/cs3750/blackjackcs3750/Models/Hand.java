@@ -19,13 +19,20 @@ public class Hand {
         for (Card card : handCards) {
             cardCount += card.getValue();
         }
+        if(cardCount > 21){
+            for (Card card : handCards) {
+                if(card.getValue() == 11){
+                    cardCount = cardCount - 10;
+                }
+            }
+        }
         return cardCount;
     }
 
     public void addCard(Card card) {
         handCards.add(card);
     }
-
+    public void removeAllCards(){handCards.removeAll(handCards);}
     @Override
     public String toString() {
         String hand = "";
