@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
 
     protected Button btnHit;
     protected Button btnStand;
-    protected Button btnDeal; //button added by Geese
+    //protected Button btnDeal; //button added by Geese
 
     HandFragment dealerHand;
     HandFragment playerHand;
@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
 
         btnHit = (Button) findViewById(R.id.btnHit);
         btnStand = (Button) findViewById(R.id.btnStand);
-        btnDeal = (Button) findViewById(R.id.btnDeal);
+       // btnDeal = (Button) findViewById(R.id.btnDeal);
 
-        btnDeal.setOnClickListener(new View.OnClickListener() { //Geese
+       /* btnDeal.setOnClickListener(new View.OnClickListener() { //Geese
             @Override
             public void onClick(View view) {
                 DealerHandFragment dealerHandFragment = (DealerHandFragment)getSupportFragmentManager().findFragmentByTag("dealerHand");
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
                 dealerHandFragment.updateView();
                 playerHandFragment.updateView();
             }
-        });
+        });*/
 
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,6 +175,19 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
                 return true;
             case R.id.clearStats:
                 clearStats();
+                return true;
+            case R.id.newGame:
+                DealerHandFragment dealerHandFragment = (DealerHandFragment)getSupportFragmentManager().findFragmentByTag("dealerHand");
+                PlayerHandFragment playerHandFragment = (PlayerHandFragment)getSupportFragmentManager().findFragmentByTag("playerHand");
+                editor.putInt("round", 1).apply();
+                //view.setEnabled(false);
+                deck.initialize();
+                deck.shuffle();
+                dealFirstCards(new DealerHandFragment().getClass());
+                dealFirstCards(new PlayerHandFragment().getClass());
+                dealerHandFragment.setFirstCardFaceUp(false);  //could be set to true when clicking "Stand"
+                dealerHandFragment.updateView();
+                playerHandFragment.updateView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

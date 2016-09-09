@@ -19,7 +19,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="2">
 
             <TextView
                 android:fontFamily="sans-serif-smallcaps"
@@ -37,9 +38,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_weight="2"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp">
 
             <TextView
                 android:fontFamily="sans-serif-smallcaps"
@@ -56,23 +58,45 @@
                 android:layout_height="200dp"/>
         </LinearLayout>
 
-        <Button
+<View
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="2dp"></View>
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+
+            <!--
+            <Button
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:backgroundTint="#FFFFFF"
             android:id="@+id/btnDeal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Deal"/>
+-->
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
             <Button
+                android:layout_marginEnd="32dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:backgroundTint="#FFFFFF"
                 android:id="@+id/btnHit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hit"/>
             <Button
+                android:layout_marginStart="32dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:backgroundTint="#FFFFFF"
                 android:id="@+id/btnStand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

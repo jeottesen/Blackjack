@@ -121,7 +121,7 @@ public class HandFragment extends Fragment {
             ImageView newCard = new ImageView(getContext());
             newCard.setElevation(beginningElevation + (index * 4));
             newCard.setAdjustViewBounds(true);
-            newCard.setOutlineProvider(ViewOutlineProvider.BOUNDS);
+            newCard.setOutlineProvider(ViewOutlineProvider.PADDED_BOUNDS);
             int drawableID = mainActivity.getResources().getIdentifier(cardStrings.get(index), "drawable", mainActivity.getPackageName());
             if (thisClass.toString().contains("Dealer") && index == 0) {
                 if(isFirstCardFaceUp)
