@@ -109,6 +109,7 @@ public class HandFragment extends Fragment {
         int beginningElevation = 4;
         MainActivity mainActivity = (MainActivity)getActivity();
         RelativeLayout relativeLayoutHand = (RelativeLayout)getView().findViewById(R.id.rel_layout_hand);
+        relativeLayoutHand.removeAllViews();  //remove what's there before adding more
 
         for (String card : cardStrings) {
             //each card has to have a new instance of LayoutParams

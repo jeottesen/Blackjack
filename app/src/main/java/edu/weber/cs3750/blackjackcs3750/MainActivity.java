@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
                 DealerHandFragment dealerHandFragment = (DealerHandFragment)getSupportFragmentManager().findFragmentByTag("dealerHand");
                 PlayerHandFragment playerHandFragment = (PlayerHandFragment)getSupportFragmentManager().findFragmentByTag("playerHand");
                 editor.putInt("round", 1).apply();
-                view.setEnabled(false);
+                //view.setEnabled(false);
                 deck.initialize();
                 deck.shuffle();
                 dealFirstCards(new DealerHandFragment().getClass());
