@@ -15,6 +15,7 @@ import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
 import edu.weber.cs3750.blackjackcs3750.Models.CardSuits;
 import edu.weber.cs3750.blackjackcs3750.Models.CardValues;
+import edu.weber.cs3750.blackjackcs3750.Models.Deck;
 import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class MainActivity extends AppCompatActivity implements HandFragment.OnPlayerInteractionListener {
@@ -36,12 +37,15 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
             return;
         }
 
+        Deck dealerDeck = new Deck();
+        dealerDeck.shuffle();
+
         dealerHand = new HandFragment();
-        dealerHand.addCard(new Card(CardValues.ACE, CardSuits.HEARTS));
+        dealerHand.addCard(dealerDeck.draw());
 
         playerHand = new HandFragment();
-        playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
-        playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
+        playerHand.addCard(dealerDeck.draw());
+        playerHand.addCard(dealerDeck.draw());
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dealerHand, dealerHand)
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //deck.draw()
                 dealerHand.addCard(new Card(CardValues.KING, CardSuits.SPADES));
                 playerHand.addCard(new Card(CardValues.SEVEN, CardSuits.HEARTS));
             }
