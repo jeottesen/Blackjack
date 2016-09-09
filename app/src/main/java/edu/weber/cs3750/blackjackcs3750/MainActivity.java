@@ -25,15 +25,15 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         super.onCreate(savedInstanceState);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
-        currentDeck = new Deck();
+
         if (savedInstanceState != null) {
             return;
         }
-        Intent intent = new Intent();
-        intent.putExtra("isPlayer", true);
-        playerHand = new HandFragment();
-        intent.putExtra("isPlayer",false);
-        dealerHand = new HandFragment();
+
+        currentDeck = new Deck();
+
+        playerHand = HandFragment.newInstance(true);
+        dealerHand = HandFragment.newInstance(false);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dealerHand, dealerHand)
