@@ -113,21 +113,21 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
 
     public void hit(){
         if(playerTurn == true) {
-            playerHand.addCard(currentDeck.getTopCard());
+            playerHand.addCard(currentDeck.draw());
             playerTurn = false;
         }
         if(playerTurn == false) {
             if (dealerHand.getHandCount() < 17)
-                dealerHand.addCard(currentDeck.getTopCard());
+                dealerHand.addCard(currentDeck.draw());
             playerTurn = true;
         }
     }
 
     public void deal(){
-        dealerHand.addCard(currentDeck.getTopCard());
-        playerHand.addCard(currentDeck.getTopCard());
-        dealerHand.addCard(currentDeck.getTopCard());
-        playerHand.addCard(currentDeck.getTopCard());
+        dealerHand.addCard(currentDeck.draw());
+        playerHand.addCard(currentDeck.draw());
+        dealerHand.addCard(currentDeck.draw());
+        playerHand.addCard(currentDeck.draw());
     }
 
     public void findWinner()
