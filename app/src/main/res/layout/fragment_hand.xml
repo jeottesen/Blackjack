@@ -6,16 +6,29 @@
              tools:context=".HandFragment">
 
 
+<RelativeLayout
+    android:layout_weight="9"
+    android:id="@+id/rel_layout_hand"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+</RelativeLayout>
+
+<!--
     <TextView
         android:id="@+id/currentHand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="10H 8S"/>
+        />
+ -->
     <TextView
+        android:textSize="18sp"
+        android:layout_weight="1"
         android:id="@+id/handCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
-        android:text="18"/>
+       />
 
 </LinearLayout>

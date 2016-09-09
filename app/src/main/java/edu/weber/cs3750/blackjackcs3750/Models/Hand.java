@@ -34,4 +34,12 @@ public class Hand {
         }
         return hand;
     }
+
+    public ArrayList<String> toStringArrayList(){
+        ArrayList<String> cardStrings = new ArrayList<>();
+        for (Card card: handCards) {
+            cardStrings.add(card.toString());
+        }
+        return cardStrings;
+    }
 }

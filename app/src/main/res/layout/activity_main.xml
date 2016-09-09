@@ -22,7 +22,7 @@
         <FrameLayout
             android:id="@+id/dealerHand"
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="200dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -30,7 +30,13 @@
         <FrameLayout
             android:id="@+id/playerHand"
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="200dp"/>
+        <Button
+            android:id="@+id/btnDeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deal"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"

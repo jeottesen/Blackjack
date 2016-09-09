@@ -1,13 +1,21 @@
 package edu.weber.cs3750.blackjackcs3750;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
 import edu.weber.cs3750.blackjackcs3750.Models.Hand;
@@ -17,7 +25,6 @@ import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 public class HandFragment extends Fragment {
 
     protected Hand mHand;
-
     private TextView txvCurrentHand;
     private TextView txvHandCount;
 
@@ -53,7 +60,7 @@ public class HandFragment extends Fragment {
         }
     }
 
-    protected void updateView() {
+/*    protected void updateView() {
         //return if the textview is null
         // if the textview is null the view probably hasn't been created yet.
         // this function will run when the view is created
@@ -71,6 +78,48 @@ public class HandFragment extends Fragment {
             handCountText = "Bust";
 
         txvHandCount.setText(handCountText);
+    }*/
+
+
+    protected void updateView() {
+        ArrayList<String> cardStrings = mHand.toStringArrayList();
+        //Log.d("debug", "updateView: cardStrings.size " + cardStrings.size());
+        drawCardImage(cardStrings);
+        //txvCurrentHand.setText(String.valueOf(cardStrings.get(0)));
+        String handCountText;
+
+        if(mHand.getCardCount() < 21)
+            handCountText = String.valueOf(mHand.getCardCount());
+        else if (mHand.getCardCount() == 21)
+            handCountText = "BlackJack";
+        else
+            handCountText = "Bust";
+
+        txvHandCount.setText(handCountText);
+    }
+
+    private void drawCardImage(ArrayList<String> cardStrings) {
+        int beginningStartMargin = 60;
+        int beginningElevation = 4;
+        MainActivity mainActivity = (MainActivity)getActivity();
+        RelativeLayout relativeLayoutHand = (RelativeLayout)getView().findViewById(R.id.rel_layout_hand);
+
+        for (String card : cardStrings) {
+            //each card has to have a new instance of LayoutParams
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                    ((int)mainActivity.getResources().getDimension(R.dimen.card_width),
+                            (int)mainActivity.getResources().getDimension(R.dimen.card_height));
+            int index = cardStrings.indexOf(card);
+            params.setMargins(beginningStartMargin + (index * 90), 20, 0, 0);
+            ImageView newCard = new ImageView(getContext());
+            newCard.setElevation(beginningElevation + (index * 4));
+            newCard.setAdjustViewBounds(true);
+            newCard.setOutlineProvider(ViewOutlineProvider.BOUNDS);
+            int drawableID = mainActivity.getResources().getIdentifier(cardStrings.get(index), "drawable", mainActivity.getPackageName());
+            newCard.setImageResource(drawableID);
+            newCard.setScaleType(ImageView.ScaleType.FIT_XY);
+            relativeLayoutHand.addView(newCard, params);
+        }
     }
 
     @Override
@@ -95,13 +144,13 @@ public class HandFragment extends Fragment {
         if(mHand == null)
             mHand = new Hand();
 
-        MainActivity mainActivity = (MainActivity)getActivity();
-        mainActivity.dealFirstCards(this.getClass());  //this way the first cards are dealt AFTER the Hand exists. (Geese)
+        //MainActivity mainActivity = (MainActivity)getActivity();
+        //mainActivity.dealFirstCards(this.getClass());  //this way the first cards are dealt AFTER the Hand exists. (Geese)
 
-        txvCurrentHand = (TextView) view.findViewById(R.id.currentHand);
+        //txvCurrentHand = (TextView) view.findViewById(R.id.currentHand);
         txvHandCount = (TextView) view.findViewById(R.id.handCount);
 
-        updateView();
+        //updateView();
     }
 
     @Override
@@ -124,4 +173,6 @@ public class HandFragment extends Fragment {
     public interface OnPlayerInteractionListener {
         void handEndStatus(HandStatus status);
     }
+
+
 }

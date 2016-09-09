@@ -27,9 +27,17 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
     Deck deck;
     Queue<Card> discardQueue = new LinkedList<>();
 
+    public SharedPreferences prefs;
+    public SharedPreferences.Editor editor;
+
+    protected Button btnHit;
+    protected Button btnStand;
+    protected Button btnDeal; //button added by Geese
+
     HandFragment dealerHand;
     HandFragment playerHand;
 
+    private int round;
     private int wins;
     private int losses;
 
@@ -37,10 +45,13 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        prefs = getPreferences(MainActivity.MODE_PRIVATE);
+        editor = prefs.edit();
+
         deck = new Deck();
-        deck.initialize();
-        Log.d("debug", "deck size: " + deck.deckSize());
-        Log.d("debug", "card 0: " + deck.deck.get(0).getValue());
+
+       // Log.d("debug", "deck size: " + deck.deckSize());
+       // Log.d("debug", "card 0: " + deck.deck.get(0).getValue());
 
         if (savedInstanceState != null) {
             return;
@@ -55,19 +66,36 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
     //playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
     //playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.dealerHand, dealerHand)
+                .add(R.id.dealerHand, dealerHand, "dealerHand")
                 .commit();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.playerHand, playerHand)
+                .add(R.id.playerHand, playerHand, "playerHand")
                 .commit();
 
 
        // Log.d("debug", "onCreate: dealerHand 0 : " + dealerHand.mHand.handCards.get(0).getValue());
 
 
-        Button btnHit = (Button) findViewById(R.id.btnHit);
-        Button btnStand = (Button) findViewById(R.id.btnStand);
+        btnHit = (Button) findViewById(R.id.btnHit);
+        btnStand = (Button) findViewById(R.id.btnStand);
+        btnDeal = (Button) findViewById(R.id.btnDeal);
+
+        btnDeal.setOnClickListener(new View.OnClickListener() { //Geese
+            @Override
+            public void onClick(View view) {
+                DealerHandFragment dealerHandFragment = (DealerHandFragment)getSupportFragmentManager().findFragmentByTag("dealerHand");
+                PlayerHandFragment playerHandFragment = (PlayerHandFragment)getSupportFragmentManager().findFragmentByTag("playerHand");
+                editor.putInt("round", 1).apply();
+                view.setEnabled(false);
+                deck.initialize();
+                deck.shuffle();
+                dealFirstCards(new DealerHandFragment().getClass());
+                dealFirstCards(new PlayerHandFragment().getClass());
+                dealerHandFragment.updateView();
+                playerHandFragment.updateView();
+            }
+        });
 
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
