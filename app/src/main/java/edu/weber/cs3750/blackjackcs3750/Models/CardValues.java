@@ -5,7 +5,6 @@ package edu.weber.cs3750.blackjackcs3750.Models;
  */
 public enum CardValues {
 
-    ONE(1),
     TWO(2),
     THREE(3),
     FOUR(4),

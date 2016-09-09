@@ -17,5 +17,28 @@
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
         android:text="18"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/card_one"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/card_two"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/card_three"
+        android:visibility="gone"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/card_four"
+        android:visibility="gone"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/card_five"
+        android:visibility="gone"/>
 
 </LinearLayout>
