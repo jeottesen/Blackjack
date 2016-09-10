@@ -4,18 +4,24 @@ package edu.weber.cs3750.blackjackcs3750.Models;
  * Created by jeremyottesen on 8/31/16.
  */
 public enum CardSuits {
-    SPADES('\u2660'),
+    /*SPADES('\u2660'),
     HEARTS('\u2665'),
     DIAMONDS('\u2666'),
-    CLUBS('\u2663');
+    CLUBS('\u2663');*/
 
-    private final char value;
+    //BACK("back"), //added by Gisela, not sure it'll be necessary
+    SPADES("spades"),
+    HEARTS("hearts"),
+    DIAMONDS("diamonds"),
+    CLUBS("clubs");
 
-    CardSuits(final char value) {
+    private final String value;
+
+    CardSuits(final String value) {
         this.value = value;
     }
 
-    public char getValue() {
+    public String getValue() {
         return value;
     }
 

@@ -4,6 +4,7 @@ package edu.weber.cs3750.blackjackcs3750;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,12 +14,23 @@ import android.widget.Button;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.LoseDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
+
 import edu.weber.cs3750.blackjackcs3750.Models.Deck;
 import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String PREFS_NAME = "game_stats";
+
+    Deck deck;
+    Queue<Card> discardQueue = new LinkedList<>();
+
+    public SharedPreferences prefs;
+    public SharedPreferences.Editor editor;
+
+    protected Button btnHit;
+    protected Button btnStand;
+    //protected Button btnDeal; //button added by Geese
 
     HandFragment dealerHand;
     HandFragment playerHand;
@@ -35,10 +47,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
+        prefs = getPreferences(MainActivity.MODE_PRIVATE);
+        editor = prefs.edit();
+
+        deck = new Deck();
+
+       // Log.d("debug", "deck size: " + deck.deckSize());
+       // Log.d("debug", "card 0: " + deck.deck.get(0).getValue());
 
         if (savedInstanceState != null) {
             return;
         }
+
 
         currentDeck = new Deck();
 
@@ -46,18 +66,24 @@ public class MainActivity extends AppCompatActivity {
         dealerHand = HandFragment.newInstance(false);
 
 
+
+    playerHand = new PlayerHandFragment();
+    //playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
+    //playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.dealerHand, dealerHand)
+                .add(R.id.dealerHand, dealerHand, "dealerHand")
                 .commit();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.playerHand, playerHand)
+                .add(R.id.playerHand, playerHand, "playerHand")
                 .commit();
 
         deal();
 
+
         final Button btnHit = (Button) findViewById(R.id.btnHit);
         Button btnStand = (Button) findViewById(R.id.btnStand);
+
 
 
         btnHit.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
         wins = settings.getInt("wins", 0);
         losses = settings.getInt("losses", 0);
 
+    }
+
+    /*
+    This method gets called by each HandFragment after its View is created.  That way the HandFragment's hand
+    is sure to actually exist before the first cards are dealt to it.  (avoiding Null Pointer)  --Geese
+     */
+    public void dealFirstCards(Class theClass){
+        if (dealerHand.mHand != null && theClass.toString().contains("Dealer")) {
+            deck.dealCard(dealerHand.mHand, 2);
+        }
+        if (playerHand.mHand != null && theClass.toString().contains("Player"))
+            deck.dealCard(playerHand.mHand, 2);
     }
 
 
@@ -159,6 +197,19 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.clearStats:
                 clearStats();
+                return true;
+            case R.id.newGame:
+                DealerHandFragment dealerHandFragment = (DealerHandFragment)getSupportFragmentManager().findFragmentByTag("dealerHand");
+                PlayerHandFragment playerHandFragment = (PlayerHandFragment)getSupportFragmentManager().findFragmentByTag("playerHand");
+                editor.putInt("round", 1).apply();
+                //view.setEnabled(false);
+                deck.initialize();
+                deck.shuffle();
+                dealFirstCards(new DealerHandFragment().getClass());
+                dealFirstCards(new PlayerHandFragment().getClass());
+                dealerHandFragment.setFirstCardFaceUp(false);  //could be set to true when clicking "Stand"
+                dealerHandFragment.updateView();
+                playerHandFragment.updateView();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

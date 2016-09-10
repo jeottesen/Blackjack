@@ -19,6 +19,7 @@ public enum CardValues {
     KING(10),
     ACE(11);
 
+
     private final int value;
 
     CardValues(final int value) {

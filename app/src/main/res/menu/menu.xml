@@ -7,5 +7,7 @@
     <item
         android:id="@+id/clearStats"
         android:title="Clear Stats" />
-
+    <item
+        android:id="@+id/newGame"
+        android:title="New Game"/>
 </menu>

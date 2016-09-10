@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/table_felt"
     tools:context="edu.weber.cs3750.blackjackcs3750.MainActivity">
 
     <LinearLayout
@@ -15,33 +16,87 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dealer Hand"/>
-        <FrameLayout
-            android:id="@+id/dealerHand"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Player Hand"/>
-        <FrameLayout
-            android:id="@+id/playerHand"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <TextView
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="26sp"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dealer:"
+                android:paddingTop="10dp"/>
+
+            <FrameLayout
+                android:id="@+id/dealerHand"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+        </LinearLayout>
 
         <LinearLayout
+            android:layout_weight="2"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp">
+
+            <TextView
+                android:fontFamily="sans-serif-smallcaps"
+                android:textSize="26sp"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Player:"
+                android:paddingTop="10dp"/>
+
+            <FrameLayout
+                android:id="@+id/playerHand"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+        </LinearLayout>
+
+<View
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="2dp"></View>
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal">
+
+
+            <!--
             <Button
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:backgroundTint="#FFFFFF"
+            android:id="@+id/btnDeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deal"/>
+-->
+
+            <Button
+                android:layout_marginEnd="32dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:backgroundTint="#FFFFFF"
                 android:id="@+id/btnHit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hit"/>
             <Button
+                android:layout_marginStart="32dp"
+                android:textSize="16sp"
+                android:textColor="@color/colorAccent"
+                android:backgroundTint="#FFFFFF"
                 android:id="@+id/btnStand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

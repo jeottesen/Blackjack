@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Hand {
 
-    private List<Card> handCards;
+    public List<Card> handCards;
 
     public Hand(){
         handCards = new ArrayList<>();
@@ -52,5 +52,13 @@ public class Hand {
             hand += card.toString() +" ";
         }
         return hand;
+    }
+
+    public ArrayList<String> toStringArrayList(){
+        ArrayList<String> cardStrings = new ArrayList<>();
+        for (Card card: handCards) {
+            cardStrings.add(card.toString());
+        }
+        return cardStrings;
     }
 }
