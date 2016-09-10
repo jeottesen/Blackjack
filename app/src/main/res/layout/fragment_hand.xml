@@ -2,17 +2,13 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-<<<<<<< HEAD
-              android:orientation="vertical"
+              android:orientation="horizontal"
              tools:context=".HandFragment">
 
     <TextView
         android:id="@+id/currentHand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-=======
-              android:orientation="horizontal"
-              tools:context=".HandFragment">
 
     <TextView
         android:paddingTop="10dp"
@@ -36,18 +32,5 @@
 
 </RelativeLayout>
 
-<!--
->>>>>>> geese-1
-    <TextView
-        android:id="@+id/currentHand"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:textAlignment="textEnd"/>
-=======
-        />
- -->
-
->>>>>>> geese-1
 
 </LinearLayout>

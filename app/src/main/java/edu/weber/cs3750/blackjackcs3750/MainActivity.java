@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "game_stats";
 
     Deck deck;
-    Queue<Card> discardQueue = new LinkedList<>();
 
     public SharedPreferences prefs;
     public SharedPreferences.Editor editor;
@@ -66,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
         dealerHand = HandFragment.newInstance(false);
 
 
-
-    playerHand = new PlayerHandFragment();
     //playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
     //playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
         getSupportFragmentManager().beginTransaction()
@@ -110,17 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*
-    This method gets called by each HandFragment after its View is created.  That way the HandFragment's hand
-    is sure to actually exist before the first cards are dealt to it.  (avoiding Null Pointer)  --Geese
-     */
-    public void dealFirstCards(Class theClass){
-        if (dealerHand.mHand != null && theClass.toString().contains("Dealer")) {
-            deck.dealCard(dealerHand.mHand, 2);
-        }
-        if (playerHand.mHand != null && theClass.toString().contains("Player"))
-            deck.dealCard(playerHand.mHand, 2);
-    }
 
 
     public void resetGame() {
@@ -199,17 +185,7 @@ public class MainActivity extends AppCompatActivity {
                 clearStats();
                 return true;
             case R.id.newGame:
-                DealerHandFragment dealerHandFragment = (DealerHandFragment)getSupportFragmentManager().findFragmentByTag("dealerHand");
-                PlayerHandFragment playerHandFragment = (PlayerHandFragment)getSupportFragmentManager().findFragmentByTag("playerHand");
-                editor.putInt("round", 1).apply();
-                //view.setEnabled(false);
-                deck.initialize();
-                deck.shuffle();
-                dealFirstCards(new DealerHandFragment().getClass());
-                dealFirstCards(new PlayerHandFragment().getClass());
-                dealerHandFragment.setFirstCardFaceUp(false);  //could be set to true when clicking "Stand"
-                dealerHandFragment.updateView();
-                playerHandFragment.updateView();
+                resetGame();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

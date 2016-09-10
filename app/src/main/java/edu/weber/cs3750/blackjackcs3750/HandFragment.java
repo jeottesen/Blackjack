@@ -2,7 +2,6 @@ package edu.weber.cs3750.blackjackcs3750;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +19,12 @@ import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class HandFragment extends Fragment {
 
+    private View mView;
     private Hand mHand;
     private boolean isPlayer;
     private TextView txvCurrentHand;
     private TextView txvHandCount;
 
-
-
-    private boolean isFirstCardFaceUp;
-
-    protected void setFirstCardFaceUp(boolean faceUp){
-        isFirstCardFaceUp = faceUp;
-    }
 
     public HandFragment() {
         // Required empty public constructor
@@ -73,14 +66,14 @@ public class HandFragment extends Fragment {
         return mHand.getHandStatus();
     }
 
-/*    protected void updateView() {
-        //return if the textview is null
-        // if the textview is null the view probably hasn't been created yet.
-        // this function will run when the view is created
-        if (txvHandCount == null)
+
+    protected void updateView() {
+        if (mView == null)
             return;
 
-        txvCurrentHand.setText(mHand.toString());
+        ArrayList<String> cardStrings = mHand.toStringArrayList();
+
+        drawCardImages(cardStrings, this.getClass());
         String handCountText = "";
         int cardCount = mHand.getCardCount();
 
@@ -94,42 +87,22 @@ public class HandFragment extends Fragment {
                 break;
         }
         handCountText += cardCount;
-
-        txvHandCount.setText(handCountText);
-    }*/
-
-
-
-
-    protected void updateView() {
-        ArrayList<String> cardStrings = mHand.toStringArrayList();
-        //Log.d("debug", "updateView: cardStrings.size " + cardStrings.size());
-        drawCardImages(cardStrings, this.getClass());
-        //txvCurrentHand.setText(String.valueOf(cardStrings.get(0)));
-        String handCountText;
-
-        if(mHand.getCardCount() < 21)
-            handCountText = String.valueOf(mHand.getCardCount());
-        else if (mHand.getCardCount() == 21)
-            handCountText = "BlackJack";
-        else
-            handCountText = "Bust";
-
         txvHandCount.setText(handCountText);
     }
 
     private void drawCardImages(ArrayList<String> cardStrings, Class thisClass) {
+
         int beginningStartMargin = 60;
         int beginningElevation = 4;
-        MainActivity mainActivity = (MainActivity)getActivity();
-        RelativeLayout relativeLayoutHand = (RelativeLayout)getView().findViewById(R.id.rel_layout_hand);
+        MainActivity mainActivity = (MainActivity) getActivity();
+        RelativeLayout relativeLayoutHand = (RelativeLayout) mView.findViewById(R.id.rel_layout_hand);
         relativeLayoutHand.removeAllViews();  //remove what's there before adding more
 
         for (String card : cardStrings) {
             //each card has to have a new instance of LayoutParams
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
-                    ((int)mainActivity.getResources().getDimension(R.dimen.card_width),
-                            (int)mainActivity.getResources().getDimension(R.dimen.card_height));
+                    ((int) mainActivity.getResources().getDimension(R.dimen.card_width),
+                            (int) mainActivity.getResources().getDimension(R.dimen.card_height));
             int index = cardStrings.indexOf(card);
             params.setMargins(beginningStartMargin + (index * 90), 20, 0, 0);
             ImageView newCard = new ImageView(getContext());
@@ -137,14 +110,9 @@ public class HandFragment extends Fragment {
             newCard.setAdjustViewBounds(true);
             newCard.setOutlineProvider(ViewOutlineProvider.PADDED_BOUNDS);
             int drawableID = mainActivity.getResources().getIdentifier(cardStrings.get(index), "drawable", mainActivity.getPackageName());
-            if (thisClass.toString().contains("Dealer") && index == 0) {
-                if(isFirstCardFaceUp)
-                    newCard.setImageResource(drawableID);
-                else
-                    newCard.setImageResource(R.drawable.card_back);
-            }
-            else
-                newCard.setImageResource(drawableID);
+
+            newCard.setImageResource(drawableID);
+
             newCard.setScaleType(ImageView.ScaleType.FIT_XY);
             relativeLayoutHand.addView(newCard, params);
         }
@@ -161,16 +129,14 @@ public class HandFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-
-
-
         return inflater.inflate(R.layout.fragment_hand, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mView = view;
 
         if (mHand == null)
             mHand = new Hand();
