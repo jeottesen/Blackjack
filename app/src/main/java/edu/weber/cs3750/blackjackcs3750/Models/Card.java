@@ -47,6 +47,8 @@ public class Card {
             default:
                 string = value.getValue() + " " + suit.getValue();
         }
+        if (faceDown)
+            string += "FD";
         return string;
     }
 
