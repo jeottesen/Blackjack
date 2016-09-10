@@ -100,14 +100,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 hit();
-
             }
         });
 
         btnStand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 findWinner();
             }
         });
@@ -176,20 +174,21 @@ public class MainActivity extends AppCompatActivity {
             dealerHand.addCard(currentDeck.draw());
             }
 
-        if (dealerHand.getHandCount() < 22 && playerHand.getHandCount() < 22) {
-            if (dealerHand.getHandCount() > playerHand.getHandCount()) {
-                playerWin = false;
-            } else {
-                playerWin = true;
-            }
-            if (dealerHand.getHandCount() == playerHand.getHandCount() ){
-                playerTies = true;
-                //dealerHand.updateView();
-            }
-        } else if (dealerHand.getHandCount() > 21) {
+        if (playerHand.getHandCount() == 21 && dealerHand.getHandCount() != 21) {
             playerWin = true;
-        } else {
+        }
+        else if (playerHand.getHandCount() > 21 || (dealerHand.getHandCount() <= 21 &&
+            playerHand.getHandCount() < dealerHand.getHandCount())) {
             playerWin = false;
+        }
+        else if (playerHand.getHandCount() < 21 && (playerHand.getHandCount() > dealerHand.getHandCount())) {
+            playerWin = true;
+        }
+        else if(playerHand.getHandCount() < 21 && dealerHand.getHandCount() > 21) {
+            playerWin = true;
+        }
+        else {
+            playerTies = true;
         }
 
         /*if (dealerHand.getHandCount() == playerHand.getHandCount() &&
@@ -214,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             dialogFragment.show(getFragmentManager(), "TIE_DIALOG");
             ties++;
         }
-        playerWin = false;
+        //playerWin = false;
     }
 
     @Override
