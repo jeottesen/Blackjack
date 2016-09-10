@@ -67,6 +67,9 @@ public class HandFragment extends Fragment {
         return mHand.getHandStatus();
     }
 
+    public Card getCard(int index){
+        return mHand.getCard(index);
+    }
 
     protected void updateView() {
         if (mView == null)
@@ -113,7 +116,7 @@ public class HandFragment extends Fragment {
             newCard.setAdjustViewBounds(true);
             newCard.setOutlineProvider(ViewOutlineProvider.PADDED_BOUNDS);
             int drawableID = getResources().getIdentifier("@drawable/" + cardStrings.get(index), "drawable", mainActivity.getPackageName());
-            drawableID = R.drawable.ace_clubs;
+            //drawableID = R.drawable.ace_clubs;
             newCard.setImageResource(drawableID);
 
 

@@ -61,4 +61,9 @@ public class Hand {
         }
         return cardStrings;
     }
+
+    public Card getCard(int index){
+        Card theCard = handCards.get(index);
+        return theCard;
+    }
 }
