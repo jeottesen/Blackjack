@@ -9,13 +9,14 @@ import android.support.v7.app.AlertDialog;
 public class StatsDialogFragment extends DialogFragment {
 
     // Will return an instance of this fragment with the wins and losses passed in
-    public static StatsDialogFragment newInstance(int wins, int losses) {
+    public static StatsDialogFragment newInstance(int wins, int losses, int ties) {
         StatsDialogFragment statsDialogFragment = new StatsDialogFragment();
 
         // Put the wins and losses variables into an android bundle objece
         Bundle args = new Bundle();
         args.putInt("wins", wins);
         args.putInt("losses", losses);
+        args.putInt("ties", ties);
 
         // set the arguments to the bundle we just made so we can access the variables later
         statsDialogFragment.setArguments(args);
@@ -31,14 +32,16 @@ public class StatsDialogFragment extends DialogFragment {
         // pull the two variables from the arguments bundle so we can display them
         int wins = getArguments().getInt("wins");
         int losses = getArguments().getInt("losses");
+        int ties = getArguments().getInt("ties");
 
         String message = "Wins: " + wins + "\n";
-        message += "Losses: " + losses;
+        message += "Losses: " + losses + "\n";
+        message += "Ties(Pushes): " + ties;
 
         // Build the Dialog and set the values that it will display
         builder.setMessage(message)
                 .setCancelable(true)
-                .setTitle("Win/Lose Statistics")
+                .setTitle("Win/Lose/Push Statistics")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
