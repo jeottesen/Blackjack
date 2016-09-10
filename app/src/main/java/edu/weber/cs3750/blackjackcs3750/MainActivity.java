@@ -70,10 +70,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        wins = 0;
-        losses = 0;
-        ties = 0;
-
         currentDeck = new Deck();
 
         playerHand = HandFragment.newInstance(true);
