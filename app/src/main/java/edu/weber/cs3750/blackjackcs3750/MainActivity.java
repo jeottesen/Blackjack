@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
         editor = prefs.edit();
 
 
-
-
-
         round = prefs.getInt("theRound", 1);
 
         deck = new Deck();
@@ -91,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         btnStand = (Button) findViewById(R.id.btnStand);
 
 
-
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void resetGame() {
         round++;
         roundDisplayMenuItem.setTitle("Round " + round + "    ");
@@ -130,27 +125,45 @@ public class MainActivity extends AppCompatActivity {
     public void hit() {
         playerHand.addCard(currentDeck.draw());
 
-        if (playerHand.getHandCount() > 21){
+        if (playerHand.getHandCount() > 21) {
             playerWin = false;
             findWinner();
         }
     }
 
 
-
     public void deal() {
+        //dealerHand.addCard(new Card(CardValues.TEN, CardSuits.HEARTS));//new, for testing, Geese
+        dealerHand.addCard(currentDeck.draw());//uncomment for real game
 
-        dealerHand.addCard(currentDeck.draw());
         playerHand.addCard(currentDeck.draw());
-        Card dealersFacedownCard = currentDeck.draw();
+
+        //Card dealersFacedownCard = new Card(CardValues.ACE, CardSuits.HEARTS);  //new, for testing, Geese
+        Card dealersFacedownCard = currentDeck.draw();  //uncomment for real game
+
+        /*  get the Card's value before it gets put faceDown and set to zero  */
+        int faceDownValue = dealersFacedownCard.getValue();   //new, Geese
+
         dealersFacedownCard.setFacedown(true);
         dealerHand.addCard(dealersFacedownCard);
+
         playerHand.addCard(currentDeck.draw());
+
+        /*  if the Dealer's faceup card is an Ace or has a value of 10,
+            then "peek" at the facedown card to determine if Dealer has natural Blackjack already.
+            new, Geese
+         */
+        if (dealerHand.getCard(0).getValue() == 11 || dealerHand.getCard(0).getValue() == 10) {
+            if ((dealerHand.getHandCount() + faceDownValue) == 21) {
+                findWinner();  //player has no chance to hit or stand, because the Dealer hit natural blackjack
+                return;  //without this return, after a push, the Push dialog will always flash before the Lose dialog
+            }
+        }
 
         checkForBlackjack();
     }
 
-    public void checkForBlackjack(){
+    public void checkForBlackjack() {
         if (playerHand.getHandCount() == 21) {
             playerWin = true;
             findWinner();
@@ -158,39 +171,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void findWinner() {
-        boolean playerTies = false;
-        dealerHand.getCard(1).setFacedown(false);
+        //boolean playerTies = false;  appears to be unused
+        dealerHand.getCard(1).setFacedown(false);  //turn Dealer's second card face up
         dealerHand.updateView();
 
-        while(dealerHand.getHandCount() < 17) {
+        while (dealerHand.getHandCount() < 17) {
             dealerHand.addCard(currentDeck.draw());
-            }
-        //Log.d("debug", "findWinner: First win number: " + wins);
+        }
         if (playerHand.getHandCount() == 21 && dealerHand.getHandCount() != 21) {
             playerWin = true;
-           // Log.d("debug", "findWinner: Seconds win number: " + wins);
-        }
-        else if (playerHand.getHandCount() > 21 || (dealerHand.getHandCount() <= 21 &&
-            playerHand.getHandCount() < dealerHand.getHandCount())) {
+        } else if (playerHand.getHandCount() > 21 || (dealerHand.getHandCount() <= 21 &&
+                playerHand.getHandCount() < dealerHand.getHandCount())) {
             playerWin = false;
-        }
-        else if (playerHand.getHandCount() < 21 && (playerHand.getHandCount() > dealerHand.getHandCount())) {
+        } else if (playerHand.getHandCount() < 21 && (playerHand.getHandCount() > dealerHand.getHandCount())) {
             playerWin = true;
-        }
-        else if(playerHand.getHandCount() < 21 && dealerHand.getHandCount() > 21) {
+        } else if (playerHand.getHandCount() < 21 && dealerHand.getHandCount() > 21) {
             playerWin = true;
-        }
-        else {
+        } else {
             TieDialogFragment dialogFragment = new TieDialogFragment();
             dialogFragment.show(getFragmentManager(), "TIE_DIALOG");
             ties++;
-            return;
+            return;  //avoid unwanted dialogs after the push
         }
 
         if (playerWin) {
             WinDialogFragment dialogFragment = new WinDialogFragment();
             dialogFragment.show(getFragmentManager(), "WIN_DIALOG");
             wins++;
+
         } else {
             LoseDialogFragment dialogFragment = new LoseDialogFragment();
             dialogFragment.show(getFragmentManager(), "LOSE_DIALOG");

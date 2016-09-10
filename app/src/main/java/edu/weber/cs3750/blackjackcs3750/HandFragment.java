@@ -2,7 +2,6 @@ package edu.weber.cs3750.blackjackcs3750;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ public class HandFragment extends Fragment {
     private boolean isPlayer;
     private TextView txvCurrentHand;
     private TextView txvHandCount;
+
 
 
     public HandFragment() {
@@ -157,5 +157,6 @@ public class HandFragment extends Fragment {
         updateView();
 
     }
+
 
 }
