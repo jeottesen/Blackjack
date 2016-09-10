@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Restore preferences
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences settings = getPreferences(MainActivity.MODE_PRIVATE);
         wins = settings.getInt("wins", 0);
         losses = settings.getInt("losses", 0);
         ties = settings.getInt("ties", 0);
