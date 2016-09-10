@@ -143,9 +143,8 @@ public class MainActivity extends AppCompatActivity {
     public void findWinner() {
         boolean playerWin;
 
-        if(dealerHand.getHandCount() < 17) {
+        while(dealerHand.getHandCount() < 17) {
             dealerHand.addCard(currentDeck.draw());
-            findWinner();
         }
 
         if (dealerHand.getHandCount() < 22 && playerHand.getHandCount() < 22) {
