@@ -15,10 +15,20 @@ public class Hand {
         handCards = new ArrayList<>();
     }
 
+
+    /*  If the hand has an Ace and the hand's total value comes to
+        greater than 21, change the ace's value to 1 (by subtracting ten
+        from the hand's value)   --Adam
+     */
     public int getCardCount() {
+        boolean hasAce = false;
         int cardCount = 0;
         for (Card card : handCards) {
+            if (card.toString().contains("ace")){hasAce = true;}
             cardCount += card.getValue();
+        }
+        if (hasAce && cardCount > 21){
+            cardCount -= 10;
         }
         return cardCount;
     }

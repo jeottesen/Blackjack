@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
         editor = prefs.edit();
 
 
+
+
+
         round = prefs.getInt("theRound", 1);
 
         deck = new Deck();
@@ -67,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        wins = 0;
+        losses = 0;
+        ties = 0;
 
         currentDeck = new Deck();
 
@@ -163,9 +169,10 @@ public class MainActivity extends AppCompatActivity {
         while(dealerHand.getHandCount() < 17) {
             dealerHand.addCard(currentDeck.draw());
             }
-
+        //Log.d("debug", "findWinner: First win number: " + wins);
         if (playerHand.getHandCount() == 21 && dealerHand.getHandCount() != 21) {
             playerWin = true;
+           // Log.d("debug", "findWinner: Seconds win number: " + wins);
         }
         else if (playerHand.getHandCount() > 21 || (dealerHand.getHandCount() <= 21 &&
             playerHand.getHandCount() < dealerHand.getHandCount())) {
@@ -188,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
             WinDialogFragment dialogFragment = new WinDialogFragment();
             dialogFragment.show(getFragmentManager(), "WIN_DIALOG");
             wins++;
-
         } else {
             LoseDialogFragment dialogFragment = new LoseDialogFragment();
             dialogFragment.show(getFragmentManager(), "LOSE_DIALOG");
@@ -200,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.round_display, menu);
         inflater.inflate(R.menu.menu, menu);
         roundDisplayMenuItem = menu.getItem(0);
         return true;
