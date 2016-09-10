@@ -5,40 +5,14 @@
               android:orientation="vertical"
              tools:context=".HandFragment">
 
-
     <TextView
         android:id="@+id/currentHand"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="10H 8S"/>
+        android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/handCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="textEnd"
-        android:text="18"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/card_one"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/card_two"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/card_three"
-        android:visibility="gone"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/card_four"
-        android:visibility="gone"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/card_five"
-        android:visibility="gone"/>
+        android:textAlignment="textEnd"/>
 
 </LinearLayout>

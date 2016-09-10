@@ -9,17 +9,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-
+import edu.weber.cs3750.blackjackcs3750.DialogFragments.LoseDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.Models.Deck;
 import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
-public class MainActivity extends AppCompatActivity implements HandFragment.OnPlayerInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
-    public static final String PREFS_NAME = "GameStats";
+    public static final String PREFS_NAME = "game_stats";
 
     HandFragment dealerHand;
     HandFragment playerHand;
@@ -29,9 +28,6 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
     private int losses;
 
     private Deck currentDeck;
-    private Button btnHit;
-    private Button btnStand;
-    private Button btnNewGame;
     private boolean playerTurn = true;
 
     @Override
@@ -43,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         if (savedInstanceState != null) {
             return;
         }
-
 
         currentDeck = new Deck();
 
@@ -64,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
         final Button btnHit = (Button) findViewById(R.id.btnHit);
         Button btnStand = (Button) findViewById(R.id.btnStand);
 
-        btnNewGame = (Button) findViewById(R.id.btnNewGame);
-
 
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,30 +67,16 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
 
             }
         });
+
         btnStand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(playerTurn == true){
-                    playerTurn = false;
-                    hit();
-                }
-                if(dealerHand.getHandCount() > 17) {
-                    findWinner();
-                }
+
+                findWinner();
             }
         });
 
-        btnNewGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                btnHit.setClickable(true);
-                playerHand.removeAllCards();
-                dealerHand.removeAllCards();
-                currentDeck.shuffle();
-                deal();
-            }
-        });
-    
+
         // Restore preferences
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         wins = settings.getInt("wins", 0);
@@ -107,70 +86,61 @@ public class MainActivity extends AppCompatActivity implements HandFragment.OnPl
 
 
     public void resetGame() {
-        // TODO reset deck and player hands
+        playerHand.removeAllCards();
+        dealerHand.removeAllCards();
+        currentDeck.shuffle();
+        deal();
     }
 
 
-    public void hit(){
-        if(playerTurn == true) {
-            playerHand.addCard(currentDeck.draw());
-            playerTurn = false;
-        }
-        if(playerTurn == false) {
-            if (dealerHand.getHandCount() < 17)
-                dealerHand.addCard(currentDeck.draw());
-            playerTurn = true;
+    public void hit() {
+        playerHand.addCard(currentDeck.draw());
+
+        //if his
+        if (playerHand.getHandStatus() != HandStatus.SAFE) {
+            findWinner();
         }
     }
 
-    public void deal(){
+
+
+    public void deal() {
         dealerHand.addCard(currentDeck.draw());
         playerHand.addCard(currentDeck.draw());
         dealerHand.addCard(currentDeck.draw());
         playerHand.addCard(currentDeck.draw());
     }
 
-    public void findWinner()
-    {
-        String winnerName = "";
-        if(dealerHand.getHandCount() < 22 && playerHand.getHandCount() < 22){
-            if(dealerHand.getHandCount() >= playerHand.getHandCount()){
-                winnerName = "Dealer Wins!!";
+    public void findWinner() {
+        boolean playerWin;
+
+        if(dealerHand.getHandCount() < 17) {
+            dealerHand.addCard(currentDeck.draw());
+            findWinner();
+        }
+
+        if (dealerHand.getHandCount() < 22 && playerHand.getHandCount() < 22) {
+            if (dealerHand.getHandCount() >= playerHand.getHandCount()) {
+                playerWin = false;
+            } else {
+                playerWin = true;
             }
-            else{
-                winnerName = "Player Wins!!";
-            }
-        }
-        else if(dealerHand.getHandCount() > 21){
-            winnerName = "Player Wins!!";
-        }
-        else {
-            winnerName = "Dealer Wins!!";
+        } else if (dealerHand.getHandCount() > 21) {
+            playerWin = true;
+        } else {
+            playerWin = false;
         }
 
-        btnHit.setClickable(false);
-        Toast toast = Toast.makeText(this, winnerName, Toast.LENGTH_SHORT);
-        toast.show();
-
-        //TODO find winner and display result as dialog
-        WinDialogFragment dialogFragment = new WinDialogFragment();
-        dialogFragment.show(getFragmentManager(), "WIN_DIALOG");
-
-    }
-
-    @Override
-    public void handEndStatus(HandStatus status) {
-        String toastMessage = "";
-        if (status == HandStatus.BUST)
-            toastMessage = "Bust!";
-        else if (status == HandStatus.NATURAL)
-            toastMessage = "BlackJack!";
-        findWinner();
-//        Toast toast = Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT);
-//        toast.show();
-        if(dealerHand.getHandCount() >= 21 || playerHand.getHandCount() >= 21){
-            btnHit.setClickable(false);
+        if (playerWin) {
+            WinDialogFragment dialogFragment = new WinDialogFragment();
+            dialogFragment.show(getFragmentManager(), "WIN_DIALOG");
+            wins++;
+        } else {
+            LoseDialogFragment dialogFragment = new LoseDialogFragment();
+            dialogFragment.show(getFragmentManager(), "LOSE_DIALOG");
+            losses++;
         }
+
     }
 
     @Override

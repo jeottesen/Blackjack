@@ -1,6 +1,7 @@
 package edu.weber.cs3750.blackjackcs3750.Models;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,20 +20,31 @@ public class Hand {
         for (Card card : handCards) {
             cardCount += card.getValue();
         }
-        if(cardCount > 21){
-            for (Card card : handCards) {
-                if(card.getValue() == 11){
-                    cardCount = cardCount - 10;
-                }
-            }
-        }
         return cardCount;
+    }
+
+    public HandStatus getHandStatus() {
+        int cardCount = getCardCount();
+
+        if (cardCount > 21)
+            return HandStatus.BUST;
+        if (cardCount == 21) {
+            // a natural is a blackjack made of two cards and ace and a face card
+            if (handCards.size() == 2)
+                return HandStatus.NATURAL;
+            else
+                return HandStatus.BLACKJACK;
+        }
+
+        // cards less than 21 are safe
+        return HandStatus.SAFE;
     }
 
     public void addCard(Card card) {
         handCards.add(card);
     }
-    public void removeAllCards(){handCards.removeAll(handCards);}
+    public void removeAllCards(){ handCards.clear(); }
+
     @Override
     public String toString() {
         String hand = "";
