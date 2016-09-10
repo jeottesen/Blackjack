@@ -15,6 +15,8 @@ import edu.weber.cs3750.blackjackcs3750.DialogFragments.LoseDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
 
+import edu.weber.cs3750.blackjackcs3750.Models.Card;
+
 import edu.weber.cs3750.blackjackcs3750.Models.Deck;
 import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
@@ -131,8 +133,11 @@ public class MainActivity extends AppCompatActivity {
     public void deal() {
         dealerHand.addCard(currentDeck.draw());
         playerHand.addCard(currentDeck.draw());
-        dealerHand.addCard(currentDeck.draw());
+        Card dealersFacedownCard = currentDeck.draw();
+        dealersFacedownCard.setFacedown(true);
+        dealerHand.addCard(dealersFacedownCard);
         playerHand.addCard(currentDeck.draw());
+
     }
 
     public void findWinner() {

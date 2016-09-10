@@ -6,19 +6,27 @@ package edu.weber.cs3750.blackjackcs3750.Models;
 public class Card {
     private CardValues value;
     private CardSuits suit;
-
+    private boolean faceDown;
 
     public Card(CardValues v, CardSuits s) {
         value = v;
         suit = s;
     }
 
-    public String getSuit() {
+
+    public void setFacedown(boolean faceDown){
+        this.faceDown = faceDown;
+    }
+
+    public char getSuit() {
         return suit.getValue();
     }
 
     public int getValue() {
-        return value.getValue();
+        if (faceDown)
+            return 0;
+        else
+            return value.getValue();
     }
 
 
@@ -75,6 +83,9 @@ public class Card {
             default:
                 string = value.getValue() + "_" + suit.getValue();
         }
+        if (faceDown)
+            string += "FD";
         return string;
     }
+
 }
