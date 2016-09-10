@@ -13,10 +13,13 @@ import android.widget.Button;
 
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.LoseDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
+import edu.weber.cs3750.blackjackcs3750.DialogFragments.TieDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
 
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
 
+import edu.weber.cs3750.blackjackcs3750.Models.CardSuits;
+import edu.weber.cs3750.blackjackcs3750.Models.CardValues;
 import edu.weber.cs3750.blackjackcs3750.Models.Deck;
 import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
@@ -25,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "game_stats";
 
     Deck deck;
+
+    public int round;
+
+    private MenuItem roundDisplayMenuItem;
 
     public SharedPreferences prefs;
     public SharedPreferences.Editor editor;
@@ -36,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
     HandFragment dealerHand;
     HandFragment playerHand;
 
-
+    private boolean playerWin;
     private int wins;
     private int losses;
+    private int ties;
 
     private Deck currentDeck;
     private boolean playerTurn = true;
@@ -50,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         prefs = getPreferences(MainActivity.MODE_PRIVATE);
         editor = prefs.edit();
+
+
+        round = prefs.getInt("theRound", 1);
 
         deck = new Deck();
 
@@ -106,12 +117,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         wins = settings.getInt("wins", 0);
         losses = settings.getInt("losses", 0);
+        ties = settings.getInt("ties", 0);
 
     }
 
 
 
     public void resetGame() {
+        round++;
+        roundDisplayMenuItem.setTitle("Round " + round + "    ");
         playerHand.removeAllCards();
         dealerHand.removeAllCards();
         currentDeck.shuffle();
@@ -132,27 +146,35 @@ public class MainActivity extends AppCompatActivity {
 
     public void deal() {
         dealerHand.addCard(currentDeck.draw());
+        //playerHand.addCard(new Card(CardValues.ACE, CardSuits.HEARTS));   //for testing Blackjack
         playerHand.addCard(currentDeck.draw());
         Card dealersFacedownCard = currentDeck.draw();
         dealersFacedownCard.setFacedown(true);
         dealerHand.addCard(dealersFacedownCard);
+        //playerHand.addCard(new Card(CardValues.JACK, CardSuits.CLUBS));   //for testing Blackjack
         playerHand.addCard(currentDeck.draw());
+        checkForBlackjack();
+    }
 
+    public void checkForBlackjack(){
+        if (playerHand.getHandCount() == 21) {
+            playerWin = true;
+            findWinner();
+        }
     }
 
     public void findWinner() {
-        Log.d("debug", "findWinner: " + "got here");
-        boolean playerWin;
+
+        boolean playerTies = false;
 
         dealerHand.getCard(1).setFacedown(false);
 
         while(dealerHand.getHandCount() < 17) {
             dealerHand.addCard(currentDeck.draw());
-            
-        }
+            }
 
         if (dealerHand.getHandCount() < 22 && playerHand.getHandCount() < 22) {
-            if (dealerHand.getHandCount() >= playerHand.getHandCount()) {
+            if (dealerHand.getHandCount() > playerHand.getHandCount()) {
                 playerWin = false;
             } else {
                 playerWin = true;
@@ -163,22 +185,36 @@ public class MainActivity extends AppCompatActivity {
             playerWin = false;
         }
 
+        if (dealerHand.getHandCount() == playerHand.getHandCount() &&
+                ((dealerHand.getHandCount() < 21) || (playerHand.getHandCount() < 21))){
+            playerTies = true;
+        }
+
         if (playerWin) {
             WinDialogFragment dialogFragment = new WinDialogFragment();
             dialogFragment.show(getFragmentManager(), "WIN_DIALOG");
             wins++;
+
         } else {
             LoseDialogFragment dialogFragment = new LoseDialogFragment();
             dialogFragment.show(getFragmentManager(), "LOSE_DIALOG");
             losses++;
         }
 
+        if (playerTies){
+            TieDialogFragment dialogFragment = new TieDialogFragment();
+            dialogFragment.show(getFragmentManager(), "TIE_DIALOG");
+            ties++;
+        }
+        playerWin = false;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
+        //inflater.inflate(R.menu.round_display, menu);
         inflater.inflate(R.menu.menu, menu);
+        roundDisplayMenuItem = menu.getItem(0);
         return true;
     }
 
@@ -202,13 +238,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void showStatsDialog() {
         // Create an instance of the Dialog Fragment using the newInstance method so the arguments are bundled for us
-        StatsDialogFragment dialogFragment = StatsDialogFragment.newInstance(wins, losses);
+        StatsDialogFragment dialogFragment = StatsDialogFragment.newInstance(wins, losses, ties);
         dialogFragment.show(getFragmentManager(), "STAT_DIALOG");
     }
 
     public void clearStats() {
+        round = 1;
         wins = 0;
         losses = 0;
+        ties = 0;
     }
 
     @Override
@@ -221,7 +259,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("wins", wins);
         editor.putInt("losses", losses);
-
+        editor.putInt("ties", ties);
+        editor.putInt("theRound", round);
         // Commit the edits!
         editor.apply();
     }

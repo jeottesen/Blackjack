@@ -40,7 +40,7 @@ public class StatsDialogFragment extends DialogFragment {
 
         // Build the Dialog and set the values that it will display
         builder.setMessage(message)
-                .setCancelable(true)
+                .setCancelable(false)
                 .setTitle("Win/Lose/Push Statistics")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override

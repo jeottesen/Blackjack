@@ -19,7 +19,7 @@ public class LoseDialogFragment extends DialogFragment {
 
         // Build the Dialog and set the values that it will display
         builder.setMessage("You Lose")
-                .setCancelable(true)
+                .setCancelable(false)
                 .setTitle("Better luck next time!")
                 .setPositiveButton("Try Again?", new DialogInterface.OnClickListener() {
                     @Override

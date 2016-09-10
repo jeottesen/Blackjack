@@ -19,7 +19,7 @@ public class TieDialogFragment extends DialogFragment {
 
         // Build the Dialog and set the values that it will display
         builder.setMessage("It's a Tie (Push)!")
-                .setCancelable(true)
+                .setCancelable(false)
                 .setTitle("Your hand equals the Dealer's hand.")
                 .setPositiveButton("Try Again?", new DialogInterface.OnClickListener() {
                     @Override
