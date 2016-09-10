@@ -18,7 +18,7 @@ public class Card {
         this.faceDown = faceDown;
     }
 
-    public char getSuit() {
+    public String getSuit() {
         return suit.getValue();
     }
 
@@ -84,7 +84,7 @@ public class Card {
                 string = value.getValue() + "_" + suit.getValue();
         }
         if (faceDown)
-            string += "FD";
+            string = "card_back";
         return string;
     }
 
