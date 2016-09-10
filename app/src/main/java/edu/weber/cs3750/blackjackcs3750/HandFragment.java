@@ -83,14 +83,16 @@ public class HandFragment extends Fragment {
 
         switch (mHand.getHandStatus()) {
             case NATURAL:
+                handCountText = "\nBlackJack ";  //when the first two cards equal 21 it's "Blackjack", otherwise it's just 21.
+                break;
             case BLACKJACK:
-                handCountText += "BlackJack ";
+                //handCountText = String.valueOf(cardCount);  //just "21".
                 break;
             case BUST:
-                handCountText = "Bust ";
+                handCountText = "\nBust ";
                 break;
         }
-        handCountText += cardCount;
+        handCountText = cardCount + handCountText;
         txvHandCount.setText(handCountText);
     }
 
