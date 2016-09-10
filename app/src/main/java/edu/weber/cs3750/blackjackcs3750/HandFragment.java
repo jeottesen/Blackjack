@@ -99,22 +99,26 @@ public class HandFragment extends Fragment {
         relativeLayoutHand.removeAllViews();  //remove what's there before adding more
 
         for (String card : cardStrings) {
+
             //each card has to have a new instance of LayoutParams
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                     ((int) mainActivity.getResources().getDimension(R.dimen.card_width),
                             (int) mainActivity.getResources().getDimension(R.dimen.card_height));
             int index = cardStrings.indexOf(card);
             params.setMargins(beginningStartMargin + (index * 90), 20, 0, 0);
-            ImageView newCard = new ImageView(getContext());
+
+            ImageView newCard = new ImageView(this.getContext());
             newCard.setElevation(beginningElevation + (index * 4));
             newCard.setAdjustViewBounds(true);
             newCard.setOutlineProvider(ViewOutlineProvider.PADDED_BOUNDS);
-            int drawableID = mainActivity.getResources().getIdentifier(cardStrings.get(index), "drawable", mainActivity.getPackageName());
-
+            int drawableID = getResources().getIdentifier("@drawable/" + cardStrings.get(index), "drawable", mainActivity.getPackageName());
+            drawableID = R.drawable.ace_clubs;
             newCard.setImageResource(drawableID);
+
 
             newCard.setScaleType(ImageView.ScaleType.FIT_XY);
             relativeLayoutHand.addView(newCard, params);
+
         }
     }
 
@@ -145,7 +149,6 @@ public class HandFragment extends Fragment {
             isPlayer = getArguments().getBoolean("is_player");
         }
 
-        txvCurrentHand = (TextView) view.findViewById(R.id.currentHand);
         txvHandCount = (TextView) view.findViewById(R.id.handCount);
         updateView();
 
