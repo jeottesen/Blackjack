@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected Button btnHit;
     protected Button btnStand;
-    //protected Button btnDeal; //button added by Geese
 
     HandFragment dealerHand;
     HandFragment playerHand;
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private int ties;
 
     private Deck currentDeck;
-    private boolean playerTurn = true;
+    //private boolean playerTurn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
         deck = new Deck();
 
-       // Log.d("debug", "deck size: " + deck.deckSize());
-       // Log.d("debug", "card 0: " + deck.deck.get(0).getValue());
-
         if (savedInstanceState != null) {
             return;
         }
@@ -78,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
         dealerHand = HandFragment.newInstance(false);
 
 
-    //playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.CLUBS));
-    //playerHand.addCard(new Card(CardValues.NINE, CardSuits.DIAMONDS));
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.dealerHand, dealerHand, "dealerHand")
                 .commit();
@@ -91,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         deal();
 
 
-        final Button btnHit = (Button) findViewById(R.id.btnHit);
-        Button btnStand = (Button) findViewById(R.id.btnStand);
+        btnHit = (Button) findViewById(R.id.btnHit);
+        btnStand = (Button) findViewById(R.id.btnStand);
 
 
 
@@ -138,23 +132,19 @@ public class MainActivity extends AppCompatActivity {
             playerWin = false;
             findWinner();
         }
-
-        /*if (playerHand.getHandStatus() != HandStatus.SAFE) {
-            findWinner();
-        }*/
     }
 
 
 
     public void deal() {
+
         dealerHand.addCard(currentDeck.draw());
-        //playerHand.addCard(new Card(CardValues.ACE, CardSuits.HEARTS));   //for testing Blackjack
         playerHand.addCard(currentDeck.draw());
         Card dealersFacedownCard = currentDeck.draw();
         dealersFacedownCard.setFacedown(true);
         dealerHand.addCard(dealersFacedownCard);
-        //playerHand.addCard(new Card(CardValues.JACK, CardSuits.CLUBS));   //for testing Blackjack
         playerHand.addCard(currentDeck.draw());
+
         checkForBlackjack();
     }
 
@@ -188,14 +178,11 @@ public class MainActivity extends AppCompatActivity {
             playerWin = true;
         }
         else {
-            playerTies = true;
+            TieDialogFragment dialogFragment = new TieDialogFragment();
+            dialogFragment.show(getFragmentManager(), "TIE_DIALOG");
+            ties++;
+            return;
         }
-
-        /*if (dealerHand.getHandCount() == playerHand.getHandCount() &&
-                ((dealerHand.getHandCount() < 21) && (playerHand.getHandCount() < 21))){
-            playerTies = true;
-            dealerHand.updateView();
-        }*/
 
         if (playerWin) {
             WinDialogFragment dialogFragment = new WinDialogFragment();
@@ -208,12 +195,6 @@ public class MainActivity extends AppCompatActivity {
             losses++;
         }
 
-        if (playerTies){
-            TieDialogFragment dialogFragment = new TieDialogFragment();
-            dialogFragment.show(getFragmentManager(), "TIE_DIALOG");
-            ties++;
-        }
-        //playerWin = false;
     }
 
     @Override
@@ -275,3 +256,12 @@ public class MainActivity extends AppCompatActivity {
 }
 
 
+/*
+
+if (round == 1){
+            playerHand.addCard(new Card(CardValues.TEN, CardSuits.HEARTS));   //for testing Blackjack
+            playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.HEARTS));
+            dealerHand.addCard(new Card(CardValues.NINE, CardSuits.CLUBS));
+            dealerHand.addCard(new Card(CardValues.NINE, CardSuits.HEARTS));
+        }
+ */
