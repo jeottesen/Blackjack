@@ -136,10 +136,14 @@ public class MainActivity extends AppCompatActivity {
     public void hit() {
         playerHand.addCard(currentDeck.draw());
 
-        //if his
-        if (playerHand.getHandStatus() != HandStatus.SAFE) {
+        if (playerHand.getHandCount() > 21){
+            playerWin = false;
             findWinner();
         }
+
+        /*if (playerHand.getHandStatus() != HandStatus.SAFE) {
+            findWinner();
+        }*/
     }
 
 
@@ -164,10 +168,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void findWinner() {
-
         boolean playerTies = false;
-
         dealerHand.getCard(1).setFacedown(false);
+        dealerHand.updateView();
 
         while(dealerHand.getHandCount() < 17) {
             dealerHand.addCard(currentDeck.draw());
@@ -179,16 +182,21 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 playerWin = true;
             }
+            if (dealerHand.getHandCount() == playerHand.getHandCount() ){
+                playerTies = true;
+                //dealerHand.updateView();
+            }
         } else if (dealerHand.getHandCount() > 21) {
             playerWin = true;
         } else {
             playerWin = false;
         }
 
-        if (dealerHand.getHandCount() == playerHand.getHandCount() &&
-                ((dealerHand.getHandCount() < 21) || (playerHand.getHandCount() < 21))){
+        /*if (dealerHand.getHandCount() == playerHand.getHandCount() &&
+                ((dealerHand.getHandCount() < 21) && (playerHand.getHandCount() < 21))){
             playerTies = true;
-        }
+            dealerHand.updateView();
+        }*/
 
         if (playerWin) {
             WinDialogFragment dialogFragment = new WinDialogFragment();
@@ -247,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
         wins = 0;
         losses = 0;
         ties = 0;
+        roundDisplayMenuItem.setTitle("Round " + round + "    ");
     }
 
     @Override
