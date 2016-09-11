@@ -5,29 +5,69 @@
               android:orientation="horizontal"
               tools:context=".HandFragment">
 
-    <RelativeLayout
-        android:id="@+id/rel_layout_hand"
+<LinearLayout
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingTop="4dp"
+        android:id="@+id/identityLabel"
+        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="4">
-
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/handCount"
+        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="sans-serif-smallcaps"
-        android:paddingStart="16dp"
-        android:paddingTop="10dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
         android:textColor="#FFFFFF"
         android:textSize="26sp"
         />
 
+    </LinearLayout>
+
+    <TextView
+        android:textStyle="bold"
+        android:id="@+id/blackjack_or_bust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif-smallcaps"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+
+        />
 
 
+</LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginStart="32dp"
+        android:id="@+id/rel_layout_hand"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2">
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>

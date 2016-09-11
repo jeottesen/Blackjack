@@ -32,8 +32,8 @@
                 android:textSize="26sp"/>
 
             <FrameLayout
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
                 android:id="@+id/dealerHand"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
@@ -55,8 +55,8 @@
 
             <FrameLayout
                 android:id="@+id/playerHand"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
         </LinearLayout>
@@ -68,9 +68,10 @@
 
 
         <LinearLayout
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight=".7"
             android:gravity="center"
             android:orientation="horizontal">
 

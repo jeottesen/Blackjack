@@ -18,9 +18,9 @@ public class WinDialogFragment extends DialogFragment {
 
 
         // Build the Dialog and set the values that it will display
-        builder.setMessage("Yay you won!")
+        builder.setMessage("You're a winner!")
                 .setCancelable(false)
-                .setTitle("You're a winner!")
+                .setTitle("Yay, you won!")
                 .setPositiveButton("Play Again?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

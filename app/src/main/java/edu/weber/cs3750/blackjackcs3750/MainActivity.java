@@ -117,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
         roundDisplayMenuItem.setTitle("Round " + round + "    ");
         playerHand.removeAllCards();
         dealerHand.removeAllCards();
+        playerHand.txvBlackjackOrBust.setText("");
+        dealerHand.txvBlackjackOrBust.setText("");
         currentDeck.shuffle();
         deal();
     }

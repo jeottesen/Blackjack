@@ -24,7 +24,8 @@ public class HandFragment extends Fragment {
     private boolean isPlayer;
     private TextView txvCurrentHand;
     private TextView txvHandCount;
-
+    private TextView txvIdentityLabel;
+    public TextView txvBlackjackOrBust;
 
 
     public HandFragment() {
@@ -78,21 +79,24 @@ public class HandFragment extends Fragment {
         ArrayList<String> cardStrings = mHand.toStringArrayList();
 
         drawCardImages(cardStrings, this.getClass());
-        String handCountText = "";
         int cardCount = mHand.getCardCount();
+        String handCountText = "" + cardCount;
+
 
         switch (mHand.getHandStatus()) {
             case NATURAL:
-                handCountText = "\nBlackJack ";  //when the first two cards equal 21 it's "Blackjack", otherwise it's just 21.
+                //handCountText = "\nBlackJack ";  //when the first two cards equal 21 it's "Blackjack", otherwise it's just 21.
+                txvBlackjackOrBust.setText("Blackjack!");
                 break;
             case BLACKJACK:
                 //handCountText = String.valueOf(cardCount);  //just "21".
                 break;
             case BUST:
-                handCountText = "\nBust ";
+                //handCountText = "\nBust ";
+                txvBlackjackOrBust.setText("Bust!");
                 break;
         }
-        handCountText = cardCount + handCountText;
+        //handCountText = cardCount + handCountText;
         txvHandCount.setText(handCountText);
     }
 
@@ -156,6 +160,14 @@ public class HandFragment extends Fragment {
         }
 
         txvHandCount = (TextView) view.findViewById(R.id.handCount);
+        txvIdentityLabel = (TextView) view.findViewById(R.id.identityLabel);
+        txvBlackjackOrBust = (TextView)view.findViewById(R.id.blackjack_or_bust);
+
+        if (isPlayer){
+            txvIdentityLabel.setText("Player:  ");
+        }else
+            txvIdentityLabel.setText("Dealer:  ");
+
         updateView();
 
     }
