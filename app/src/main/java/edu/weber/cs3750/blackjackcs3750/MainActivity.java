@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import edu.weber.cs3750.blackjackcs3750.DialogFragments.GameRulesFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.LoseDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.TieDialogFragment;
@@ -229,6 +230,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.newGame:
                 resetGame();
+                return true;
+            case R.id.gameRules:
+                /*GameRulesDialogFragment gameRulesDialogFragment = new GameRulesDialogFragment();
+                gameRulesDialogFragment.show(getFragmentManager(), "GAME_RULES");*/
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.wholeContainer, new GameRulesFragment(), "gameRules")
+                        .addToBackStack(null)
+                        .commit();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

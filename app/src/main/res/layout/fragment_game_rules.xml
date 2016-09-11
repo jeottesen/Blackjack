@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="edu.weber.cs3750.blackjackcs3750.DialogFragments.GameRulesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ScrollView
+            android:scrollbarThumbVertical="@color/colorAccent"
+            android:scrollbarSize="6dp"
+            android:id="@+id/scroller"
+            android:fadeScrollbars="false"
+            android:layout_weight="9"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+    <TextView
+        android:padding="16dp"
+        android:textSize="26sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/game_rules"/>
+
+        </ScrollView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+
+        android:background="@color/colorAccent"/>
+
+    <Button
+        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        style="?android:attr/borderlessButtonStyle"
+        android:id="@+id/btn_dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Dismiss"
+        android:layout_gravity="center"/>
+    </LinearLayout>
+
+</FrameLayout>
