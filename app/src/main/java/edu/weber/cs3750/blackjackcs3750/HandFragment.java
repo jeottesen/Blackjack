@@ -1,13 +1,16 @@
 package edu.weber.cs3750.blackjackcs3750;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
 import edu.weber.cs3750.blackjackcs3750.Models.Hand;
@@ -16,25 +19,41 @@ import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class HandFragment extends Fragment {
 
+    private View mView;
     private Hand mHand;
-
-    private TextView txvCurrentHand;
+    private boolean isPlayer;
     private TextView txvHandCount;
+    public TextView txvBlackjackOrBust;
 
-    private OnPlayerInteractionListener mListener;
 
     public HandFragment() {
         // Required empty public constructor
     }
 
+    public static HandFragment newInstance(boolean isPlayer) {
+        HandFragment handFragment = new HandFragment();
+
+        Bundle args = new Bundle();
+        args.putBoolean("is_player", isPlayer);
+
+        handFragment.setArguments(args);
+
+        return handFragment;
+    }
 
     // add a card to the player's hand
     public void addCard(Card card) {
-        if(mHand == null)
+        if (mHand == null)
             mHand = new Hand();
         mHand.addCard(card);
         updateView();
-        findHandStatus();
+    }
+
+    public void removeAllCards() {
+        if (mHand == null)
+            mHand = new Hand();
+        mHand.removeAllCards();
+        updateView();
     }
 
     public int getHandCount() {
@@ -43,33 +62,70 @@ public class HandFragment extends Fragment {
 
 
     // checks the status of the hand. if is a Natural or a Bust then tell the main activity
-    private void findHandStatus() {
-        if (mHand.getCardCount() > 21) {
-            mListener.handEndStatus(HandStatus.BUST);
-        }
-        else if (mHand.getCardCount() == 21) {
-            mListener.handEndStatus(HandStatus.NATURAL);
-        }
+    public HandStatus getHandStatus() {
+        return mHand.getHandStatus();
     }
 
-    private void updateView() {
-        //return if the textview is null
-        // if the textview is null the view probably hasn't been created yet.
-        // this function will run when the view is created
-        if(txvHandCount == null)
+    public Card getCard(int index) {
+        return mHand.getCard(index);
+    }
+
+    protected void updateView() {
+        if (mView == null)
             return;
 
-        txvCurrentHand.setText(mHand.toString());
-        String handCountText;
+        ArrayList<String> cardStrings = mHand.toStringArrayList();
 
-        if(mHand.getCardCount() < 21)
-            handCountText = String.valueOf(mHand.getCardCount());
-        else if (mHand.getCardCount() == 21)
-            handCountText = "BlackJack";
-        else
-            handCountText = "Bust";
+        drawCardImages(cardStrings, this.getClass());
+
+        switch (mHand.getHandStatus()) {
+            case NATURAL:
+                txvBlackjackOrBust.setText(R.string.blackjack);
+                break;
+            case BLACKJACK:
+                txvBlackjackOrBust.setText(R.string.blackjack);
+                break;
+            case BUST:
+                txvBlackjackOrBust.setText(R.string.bust);
+                break;
+        }
+
+        int cardCount = mHand.getCardCount();
+        String handCountText = "" + cardCount;
 
         txvHandCount.setText(handCountText);
+    }
+
+    private void drawCardImages(ArrayList<String> cardStrings, Class thisClass) {
+
+        int beginningStartMargin = 60;
+        int beginningElevation = 4;
+        MainActivity mainActivity = (MainActivity) getActivity();
+        RelativeLayout relativeLayoutHand = (RelativeLayout) mView.findViewById(R.id.rel_layout_hand);
+        relativeLayoutHand.removeAllViews();  //remove what's there before adding more
+
+        for (String card : cardStrings) {
+
+            //each card has to have a new instance of LayoutParams
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
+                    ((int) mainActivity.getResources().getDimension(R.dimen.card_width),
+                            (int) mainActivity.getResources().getDimension(R.dimen.card_height));
+            int index = cardStrings.indexOf(card);
+            params.setMargins(beginningStartMargin + (index * 90), 20, 0, 0);
+
+            ImageView newCard = new ImageView(this.getContext());
+            newCard.setElevation(beginningElevation + (index * 4));
+            newCard.setAdjustViewBounds(true);
+            newCard.setOutlineProvider(ViewOutlineProvider.PADDED_BOUNDS);
+            int drawableID = getResources().getIdentifier("@drawable/" + cardStrings.get(index), "drawable", mainActivity.getPackageName());
+            //drawableID = R.drawable.ace_clubs;
+            newCard.setImageResource(drawableID);
+
+
+            newCard.setScaleType(ImageView.ScaleType.FIT_XY);
+            relativeLayoutHand.addView(newCard, params);
+
+        }
     }
 
     @Override
@@ -80,41 +136,35 @@ public class HandFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_hand, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(mHand == null)
+        mView = view;
+
+        if (mHand == null)
             mHand = new Hand();
 
-        txvCurrentHand = (TextView) view.findViewById(R.id.currentHand);
+        if (getArguments() != null) {
+            isPlayer = getArguments().getBoolean("is_player");
+        }
+
         txvHandCount = (TextView) view.findViewById(R.id.handCount);
+        TextView txvIdentityLabel = (TextView) view.findViewById(R.id.identityLabel);
+        txvBlackjackOrBust = (TextView) view.findViewById(R.id.blackjack_or_bust);
+
+        if (isPlayer) {
+            txvIdentityLabel.setText(R.string.player);
+        } else
+            txvIdentityLabel.setText(R.string.dealer);
 
         updateView();
+
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnPlayerInteractionListener) {
-            mListener = (OnPlayerInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnPlayerInteractionListener {
-        void handEndStatus(HandStatus status);
-    }
 }

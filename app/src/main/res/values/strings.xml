@@ -1,5 +1,40 @@
 <resources>
-    <string name="app_name">BlackJackCS3750</string>
+    <string name="app_name">BLACKJACK</string>
+    <string name="player">Player: </string>
+    <string name="dealer">Dealer: </string>
+    <string name="blackjack">Blackjack!</string>
+    <string name="bust">Bust!</string>
 
-    <string name="hello_blank_fragment">Hello Blank Fragment</string>
+    <string name="game_rules">
+        <b>Objective:</b>\n
+        Score a higher hand than Dealer – but no more than 21!\n\n
+        <b>Card Values:</b>  (Suit does not matter)\n
+        \t\t\t\t<b>Ace:</b>\t\t1 or 11\n
+        \t\t\t\t<b>2 - 10:</b>\t\tface value\n
+        \t\t\t\t<b>Face card:</b>\t\t10  \n\n
+
+
+
+<b>Bust:</b>\n  Scoring higher than 21.\n\n
+<b>Blackjack:</b>\n  Getting dealt two cards that equal exactly 21.\n\n
+<b>Hit:</b>\n  Draw another card.\n\n
+<b>Stand:</b>\n  Stop drawing and wait for Dealer’s hand to be complete.\n\n
+<b>Push:</b>\n  Player’s score is the same as Dealer’s – without busting!\n\n\n
+
+<b>Gameplay:</b>\n\n
+Two cards are dealt to Dealer, and two to Player.\n\n
+        One of Dealer’s cards is face-down.\n\nIf Dealer’s face-up card is either an Ace or a ten-card, Dealer peeks at the face-down card to see if the two cards make Blackjack (score of 21).
+\n\nIf Dealer has Blackjack, gameplay stops.
+        \n\nIf Player also has Blackjack, it’s a tie – a Push.  Otherwise Player loses.
+\n\nIf Dealer does not have Blackjack, Player may Hit multiple times, or Stand.  If the score goes over 21, Player loses (Bust).
+\n\nIf Player chooses to Stand, Dealer reveals the face-down card, and then Hits until Dealer’s score is greater than 17.
+\n\nIf Dealer’s score goes over 21, Dealer busts and Player wins (unless Player also busted).
+\n\nIf Dealer’s score is under or equal to 21 and higher than Player’s, Dealer wins.
+\n\nIf Dealer’s score is under or equal to 21 and lower than Player’s, Player wins.
+\n\nIf Dealer’s and Player’s score are both 21 or under, and are equal, it’s a Push (Tie).
+\n\nIf Player is dealt Blackjack initially, and Dealer does not have Blackjack, Player automatically wins.
+
+</string>
+    <string name="stand">Stand</string>
+    <string name="hit">Hit</string>
 </resources>

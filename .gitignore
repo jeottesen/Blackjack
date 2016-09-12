@@ -6,3 +6,5 @@
 .DS_Store
 /build
 /captures
+
+app/src/main/java/edu/weber/cs3750/blackjackcs3750/Models/Deck.java

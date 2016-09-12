@@ -18,9 +18,9 @@ public class LoseDialogFragment extends DialogFragment {
 
 
         // Build the Dialog and set the values that it will display
-        builder.setMessage("Too bad, you lose!")
-                .setCancelable(true)
-                .setTitle("Oh no You lost")
+        builder.setMessage("Better Luck Next Time!")
+                .setCancelable(false)
+                .setTitle("You Lose")
                 .setPositiveButton("Try Again?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

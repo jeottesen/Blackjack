@@ -8,7 +8,7 @@ import android.support.v7.app.AlertDialog;
 
 import edu.weber.cs3750.blackjackcs3750.MainActivity;
 
-public class WinDialogFragment extends DialogFragment {
+public class TieDialogFragment extends DialogFragment {
 
 
     @Override
@@ -18,10 +18,10 @@ public class WinDialogFragment extends DialogFragment {
 
 
         // Build the Dialog and set the values that it will display
-        builder.setMessage("You're a winner!")
+        builder.setMessage("Your hand equals the dealer's hand.")
                 .setCancelable(false)
-                .setTitle("Yay, you won!")
-                .setPositiveButton("Play Again?", new DialogInterface.OnClickListener() {
+                .setTitle("It's a Tie (Push)!")
+                .setPositiveButton("Try Again?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ((MainActivity) getActivity()).resetGame();
