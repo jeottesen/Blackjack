@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">BLACKJACK</string>
-    <string name="hello_blank_fragment">yo</string>
+    <string name="player">Player: </string>
+    <string name="dealer">Dealer: </string>
+    <string name="blackjack">Blackjack!</string>
+    <string name="bust">Bust!</string>
 
     <string name="game_rules">
         <b>Objective:</b>\n
@@ -32,4 +35,6 @@ Two cards are dealt to Dealer, and two to Player.\n\n
 \n\nIf Player is dealt Blackjack initially, and Dealer does not have Blackjack, Player automatically wins.
 
 </string>
+    <string name="stand">Stand</string>
+    <string name="hit">Hit</string>
 </resources>

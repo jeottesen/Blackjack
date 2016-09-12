@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="edu.weber.cs3750.blackjackcs3750.DialogFragments.GameRulesFragment">
+             tools:context=".GameRulesFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

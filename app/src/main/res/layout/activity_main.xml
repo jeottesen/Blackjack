@@ -1,74 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
-    android:id="@+id/wholeContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wholeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/table_felt"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.weber.cs3750.blackjackcs3750.MainActivity">
 
-
-
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+
+        <FrameLayout
+            android:id="@+id/dealerHand"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
+            android:layout_height="200dp"
+            android:layout_marginStart="32dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
-                android:paddingTop="10dp"
-                android:textColor="#FFFFFF"
-                android:textSize="26sp"/>
-
-            <FrameLayout
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:id="@+id/dealerHand"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/playerHand"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-smallcaps"
-                android:paddingTop="10dp"
-                android:textColor="#FFFFFF"
-                android:textSize="26sp"/>
-
-            <FrameLayout
-                android:id="@+id/playerHand"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="#FFFFFF"></View>
-
+            android:layout_height="200dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,7 +39,6 @@
             android:gravity="center"
             android:orientation="horizontal">
 
--->
 
             <Space
                 android:layout_width="0dp"
@@ -85,33 +46,31 @@
                 android:layout_weight="1"/>
 
             <Button
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-
                 android:id="@+id/btnHit"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"
                 android:backgroundTint="#FFFFFF"
-                android:text="Hit"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:text="@string/hit"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp"/>
+
             <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
-            <Button
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
 
+            <Button
                 android:id="@+id/btnStand"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:backgroundTint="#FFFFFF"
-                android:text="Stand"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:text="@string/stand"
                 android:textColor="@color/colorAccent"
                 android:textSize="20sp"/>
 

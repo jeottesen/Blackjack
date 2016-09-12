@@ -4,38 +4,27 @@ package edu.weber.cs3750.blackjackcs3750;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import edu.weber.cs3750.blackjackcs3750.DialogFragments.GameRulesFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.LoseDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.StatsDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.TieDialogFragment;
 import edu.weber.cs3750.blackjackcs3750.DialogFragments.WinDialogFragment;
-
 import edu.weber.cs3750.blackjackcs3750.Models.Card;
-
-import edu.weber.cs3750.blackjackcs3750.Models.CardSuits;
-import edu.weber.cs3750.blackjackcs3750.Models.CardValues;
 import edu.weber.cs3750.blackjackcs3750.Models.Deck;
-import edu.weber.cs3750.blackjackcs3750.Models.HandStatus;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String PREFS_NAME = "game_stats";
 
-    Deck deck;
-
     public int round;
 
     private MenuItem roundDisplayMenuItem;
 
-    public SharedPreferences prefs;
-    public SharedPreferences.Editor editor;
 
     protected Button btnHit;
     protected Button btnStand;
@@ -56,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
-        prefs = getPreferences(MainActivity.MODE_PRIVATE);
-        editor = prefs.edit();
 
-
-        round = prefs.getInt("theRound", 1);
-
-        deck = new Deck();
+        // Restore preferences
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        round = settings.getInt("round", 1);
+        wins = settings.getInt("wins", 0);
+        losses = settings.getInt("losses", 0);
+        ties = settings.getInt("ties", 0);
 
         if (savedInstanceState != null) {
             return;
@@ -102,13 +91,6 @@ public class MainActivity extends AppCompatActivity {
                 findWinner();
             }
         });
-
-
-        // Restore preferences
-        SharedPreferences settings = getPreferences(MainActivity.MODE_PRIVATE);
-        wins = settings.getInt("wins", 0);
-        losses = settings.getInt("losses", 0);
-        ties = settings.getInt("ties", 0);
 
     }
 
@@ -264,24 +246,14 @@ public class MainActivity extends AppCompatActivity {
 
         // We need an Editor object to make preference changes.
         // All objects are from android.context.Context
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("wins", wins);
         editor.putInt("losses", losses);
         editor.putInt("ties", ties);
-        editor.putInt("theRound", round);
+        editor.putInt("round", round);
+
         // Commit the edits!
         editor.apply();
     }
 }
-
-
-/*
-
-if (round == 1){
-            playerHand.addCard(new Card(CardValues.TEN, CardSuits.HEARTS));   //for testing Blackjack
-            playerHand.addCard(new Card(CardValues.EIGHT, CardSuits.HEARTS));
-            dealerHand.addCard(new Card(CardValues.NINE, CardSuits.CLUBS));
-            dealerHand.addCard(new Card(CardValues.NINE, CardSuits.HEARTS));
-        }
- */

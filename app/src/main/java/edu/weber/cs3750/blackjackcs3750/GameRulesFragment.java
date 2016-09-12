@@ -1,4 +1,4 @@
-package edu.weber.cs3750.blackjackcs3750.DialogFragments;
+package edu.weber.cs3750.blackjackcs3750;
 
 
 import android.graphics.Color;
@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
-
-import edu.weber.cs3750.blackjackcs3750.R;
 
 
 public class GameRulesFragment extends Fragment {
@@ -27,11 +25,11 @@ public class GameRulesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View theView =  inflater.inflate(R.layout.fragment_game_rules, container, false);
+        View theView = inflater.inflate(R.layout.fragment_game_rules, container, false);
         theView.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        scroller = (ScrollView)theView.findViewById(R.id.scroller);
+        scroller = (ScrollView) theView.findViewById(R.id.scroller);
 
-        btnDismiss = (Button)theView.findViewById(R.id.btn_dismiss);
+        btnDismiss = (Button) theView.findViewById(R.id.btn_dismiss);
         btnDismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
